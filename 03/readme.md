@@ -1,4 +1,6 @@
-a minimum viable vive scene.  remove the mouse controls to enable vive controllers
+this iteration sizes the scatterplot to start at about the floor and go to about human height (~2 meters)
+
+next: nice text positioning for roomscale VR
 
 ---
 
