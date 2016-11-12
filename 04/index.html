@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="aframe.min.js"></script>
+<script src="aframe-extras.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+<script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
+<script src="aframe-scatter-component.js"></script>
+
+<a-scene antialias='true'>
+
+  <!-- Camera -->
+  <a-entity camera look-controls wasd-controls></a-entity>
+
+  <!-- Title -->
+  <a-entity position="-1.5 3 0">
+    <a-entity bmfont-text="text: Comparison of Three Species of Iris"></a-entity>
+  </a-entity>
+
+  <!-- Legend -->
+  <a-entity position="-2.5 1 1" scale="0.8 0.8 0.8">
+    <a-entity bmfont-text="text: Iris-setosa">
+      <a-sphere radius="0.03" color="red" position="-0.1 0.05 0"></a-sphere>
+    </a-entity>
+    <a-entity bmfont-text="text: Iris-versicolor" position="0 0.5 0">
+      <a-sphere radius="0.03" color="blue" position="-0.1 0.05 0"></a-sphere>
+    </a-entity>
+    <a-entity bmfont-text="text: Iris-virginica" position="0 1 0">
+      <a-sphere radius="0.03" color="green" position="-0.1 0.05 0"></a-sphere>
+    </a-entity>
+  </a-entity>
+
+  <!-- Graph -->
+  <a-entity position="0 0 -1"
+            graph="csv:iris.csv;
+            width: 2;
+            height: 2;
+            depth: 2">
+  </a-entity>
+
+  <a-sky color="#ECECEC"></a-sky>
+</a-scene>
+<script>
+  function render () {
+    //
+    // after adding all objects to the scene
+    // add the Vive controllers
+    //
+    // add left controller 
+    d3.select('a-scene')
+      .append('a-entity')
+        .attr('id', 'leftController')
+        .attr('vive-controls', 'hand: left')
+        .attr('static-body', 'shape: sphere; sphereRadius: 0.02;')
+        .attr('sphere-collider', 'objects: .throwable')
+        .attr('grab', '')
+    // add right controller
+    d3.select('a-scene')
+      .append('a-entity')
+        .attr('id', 'rightController')
+        .attr('vive-controls', 'hand: right')
+        .attr('static-body', 'shape: sphere; sphereRadius: 0.02;')
+        .attr('sphere-collider', 'objects: .throwable')
+        .attr('grab', '')
+  };
+  var sceneEl = document.querySelector('a-scene');
+  if (sceneEl.hasLoaded) {
+    render();
+  } else {
+    sceneEl.addEventListener('loaded', render);
+  }
+</script>
