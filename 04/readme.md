@@ -2,7 +2,7 @@ a roomscale scatterplot targeting the [HTC Vive](https://en.wikipedia.org/wiki/H
 
 to enjoy this experience on the Vive, follow the instructions at [https://webvr.info/](https://webvr.info/) to download and install an experimental browser build that supports WebVR.  from there, click the `Enter VR` HMD icon on the bottom right corner of the browser window to enter the scene.  
 
-for reference, this experience was developed on the `Aug 29 2016` version `55.0.2842.0` build of Chromium with the flags `--enable-webvr` and `--enable-gamepad-extensions`
+for reference, this experience was developed on the `Aug 29 2016` version `55.0.2842.0` [build](https://drive.google.com/drive/u/1/folders/0BzudLt22BqGRQUExYzVoLU5VT2c) of Chromium with the flags `--enable-webvr` and `--enable-gamepad-extensions`
 
 to explore the scene on a 2D screen, [open in a new tab](http://bl.ocks.org/micahstubbs/raw/bef97f728381aca3f803a585581e7dbd) and then hold the `S` key until the scatterplot and legend come into view.  from there you can navigate using the `W A S D` keys and look by clicking and dragging with the mouse
 
