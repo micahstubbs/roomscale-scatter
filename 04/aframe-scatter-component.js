@@ -69,7 +69,7 @@ AFRAME.registerComponent('graph', {
       .attr('position', xLabelPosition)
       .attr('rotation', xLabelRotation);
 
-    var yLabelPosition = (width + 0.17) + ' ' + '0.2' + ' ' + (-depth + 0.1);
+    var yLabelPosition = (width + 0.12) + ' ' + '0.2' + ' ' + (-depth + 0.08);
     var yLabelRotation = '0' + ' ' + '-30' + ' ' + '90';
     d3.select('#' + originPointID)
       .append('a-entity')
@@ -78,8 +78,8 @@ AFRAME.registerComponent('graph', {
       .attr('position', yLabelPosition)
       .attr('rotation', yLabelRotation);
 
-    var zLabelPosition = (width + 0.02) + ' ' + '-0.05' + ' ' + (-depth / 2);
-    var zLabelRotation = '-45' + ' ' + '0' + ' ' + '0';
+    var zLabelPosition = (width + 0.03) + ' ' + '0.03' + ' ' + (-depth + 0.27);
+    var zLabelRotation = '-45' + ' ' + '-90' + ' ' + '0';
     d3.select('#' + originPointID)
       .append('a-entity')
       .attr('id', 'z')
