@@ -1,6 +1,6 @@
 a roomscale scatterplot targeting the [HTC Vive](https://en.wikipedia.org/wiki/HTC_Vive)
 
-to enjoy this on the Vive, follow the instructions at [https://webvr.info/](https://webvr.info/) to download and install an experimental browser build that supports WebVR.  from there, click the `Enter VR` HMD icon on the bottom right corner of the browser window to enter the scene.  
+to enjoy this experience on the Vive, follow the instructions at [https://webvr.info/](https://webvr.info/) to download and install an experimental browser build that supports WebVR.  from there, click the `Enter VR` HMD icon on the bottom right corner of the browser window to enter the scene.  
 
 for reference, this experience was developed on the `Aug 29 2016` version `55.0.2842.0` build of Chromium with the flags `--enable-webvr` and `--enable-gamepad-extensions`
 
