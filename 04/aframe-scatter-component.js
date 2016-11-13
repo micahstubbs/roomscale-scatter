@@ -93,7 +93,7 @@ AFRAME.registerComponent('graph', {
       var originPoint = d3.select('#originPoint' + data.id);
 
       // Needed to assign species a color
-      var cScale = d3.scale.ordinal()
+      var cScale = d3.scaleOrdinal()
       										 .domain(["Iris-virginica", "Iris-versicolor", "Iris-setosa"])
       										 .range(["green", "blue", "red"]);
 
@@ -108,18 +108,18 @@ AFRAME.registerComponent('graph', {
       var plotData = function (data) {
         // Scale x, y, and z values
         var xExtent = d3.extent(data, function (d) { return d.SepalLengthCm; });
-        var xScale = d3.scale.linear()
+        var xScale = d3.scaleLinear()
                        .domain(xExtent)
                        .range([xRange[0], xRange[1]])
                        .clamp('true');
 
         var yExtent = d3.extent(data, function (d) { return d.PetalLengthCm; });
-        var yScale = d3.scale.linear()
+        var yScale = d3.scaleLinear()
                        .domain(yExtent)
                        .range([yRange[0], yRange[1]]);
 
         var zExtent = d3.extent(data, function (d) { return d.SepalWidthCm; });
-        var zScale = d3.scale.linear()
+        var zScale = d3.scaleLinear()
                        .domain(zExtent)
                        .range([zRange[0], zRange[1]]);
 
