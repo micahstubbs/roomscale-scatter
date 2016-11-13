@@ -1,4 +1,24 @@
-nice text positioning for roomscale VR
+a roomscale scatterplot targeting the [HTC Vive](https://en.wikipedia.org/wiki/HTC_Vive)
+
+to enjoy this on the Vive, follow the instructions at [https://webvr.info/](https://webvr.info/) to download and install an experimental browser build that supports WebVR.  from there, click the `Enter VR` HMD icon on the bottom right corner of the browser window to enter the scene.  
+
+for reference, this experience was developed on the `Aug 29 2016` version `55.0.2842.0` build of Chromium with the flags `--enable-webvr` and `--enable-gamepad-extensions`
+
+to explore the scene on a 2D screen, hold the `S` key until the scatterplot and legend come into view.  from there you can navigate using the `W A S D` keys and look by clicking and dragging with the mouse
+
+an iteration on the [#aframevr](https://twitter.com/search?q=%23aframevr) + [#d3js](https://twitter.com/search?q=%23d3js) [Iris Graph](http://bl.ocks.org/bryik/1a4d7eab9512400de3c03086f03016c8) from [@bryik_ws](https://twitter.com/bryik_ws)
+
+featuring the famous [Iris Dataset](http://archive.ics.uci.edu/ml/datasets/Iris)
+
+for more A-Frame + D3 experiments 
+search for `aframe` on blockbuilder search
+[http://blockbuilder.org/search#text=aframe](http://blockbuilder.org/search#text=aframe)
+
+for earlier iterations of this example and a nice unified [commit history](https://github.com/micahstubbs/roomscale-scatter/commits/master), visit the [roomscale-scatter](https://github.com/micahstubbs/roomscale-scatter) repo on github
+
+---
+
+### Original `README.md`
 
 ---
 

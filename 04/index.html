@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <script src="aframe.min.js"></script>
 <script src="aframe-extras.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.3.0/d3.min.js"></script>s
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.3.0/d3.min.js"></script>
 <script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
 <script src="aframe-scatter-component.js"></script>
 <body>
@@ -26,14 +26,14 @@
 
   <!-- Legend -->
   <a-entity position="1.4 0.5 -1.5" rotation="0 -45 0" scale="0.8 0.8 0.8">
-    <a-entity bmfont-text="text: Iris-setosa">
-      <a-sphere radius="0.03" color="red" position="-0.1 0.05 0"></a-sphere>
+    <a-entity bmfont-text="text: Iris-virginica; color: #d62728" position="0 1 0">
+      <a-sphere radius="0.03" color='#d62728' position="-0.1 0.05 0"></a-sphere>
     </a-entity>
-    <a-entity bmfont-text="text: Iris-versicolor" position="0 0.5 0">
-      <a-sphere radius="0.03" color="blue" position="-0.1 0.05 0"></a-sphere>
+    <a-entity bmfont-text="text: Iris-versicolor; color: #2ca02c" position="0 0.5 0">
+      <a-sphere radius="0.03" color='#2ca02c' position="-0.1 0.05 0"></a-sphere>
     </a-entity>
-    <a-entity bmfont-text="text: Iris-virginica" position="0 1 0">
-      <a-sphere radius="0.03" color="green" position="-0.1 0.05 0"></a-sphere>
+    <a-entity bmfont-text="text: Iris-setosa; color: #1f77b4">
+      <a-sphere radius="0.03" color='#1f77b4' position="-0.1 0.05 0"></a-sphere>
     </a-entity>
   </a-entity>
 

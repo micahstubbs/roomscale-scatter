@@ -94,8 +94,16 @@ AFRAME.registerComponent('graph', {
 
       // Needed to assign species a color
       var cScale = d3.scaleOrdinal()
-      										 .domain(["Iris-virginica", "Iris-versicolor", "Iris-setosa"])
-      										 .range(["green", "blue", "red"]);
+      										 .domain([
+                              "Iris-virginica",
+                              "Iris-versicolor",
+                              "Iris-setosa"
+                            ])
+      										 .range([
+                            '#d62728', // red
+                            '#2ca02c', // green
+                            '#1f77b4' // blue
+                            ]);
 
       // Convert CSV data from string to number
       d3.csv(data.csv, function (data) {
