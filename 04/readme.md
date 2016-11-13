@@ -4,7 +4,7 @@ to enjoy this experience on the Vive, follow the instructions at [https://webvr.
 
 for reference, this experience was developed on the `Aug 29 2016` version `55.0.2842.0` build of Chromium with the flags `--enable-webvr` and `--enable-gamepad-extensions`
 
-to explore the scene on a 2D screen, hold the `S` key until the scatterplot and legend come into view.  from there you can navigate using the `W A S D` keys and look by clicking and dragging with the mouse
+to explore the scene on a 2D screen, [open in a new tab](http://bl.ocks.org/micahstubbs/raw/bef97f728381aca3f803a585581e7dbd) and then hold the `S` key until the scatterplot and legend come into view.  from there you can navigate using the `W A S D` keys and look by clicking and dragging with the mouse
 
 an iteration on the [#aframevr](https://twitter.com/search?q=%23aframevr) + [#d3js](https://twitter.com/search?q=%23d3js) [Iris Graph](http://bl.ocks.org/bryik/1a4d7eab9512400de3c03086f03016c8) from [@bryik_ws](https://twitter.com/bryik_ws)
 
