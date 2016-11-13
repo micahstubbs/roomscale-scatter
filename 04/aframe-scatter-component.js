@@ -65,8 +65,8 @@ AFRAME.registerComponent('graph', {
       .attr('position', xLabelPosition)
       .attr('rotation', xLabelRotation);
 
-    var yLabelPosition = (width + 0.05) + ' ' + (height / 2.2) + ' ' + (-depth);
-    var yLabelRotation = '0' + ' ' + '0' + ' ' + '0';
+    var yLabelPosition = (width + 0.1) + ' ' + (height / 2.2) + ' ' + (-depth);
+    var yLabelRotation = '0' + ' ' + '0' + ' ' + '90';
     d3.select('#' + originPointID)
       .append('a-entity')
       .attr('id', 'y')
