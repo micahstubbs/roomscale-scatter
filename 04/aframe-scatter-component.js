@@ -56,6 +56,10 @@ AFRAME.registerComponent('graph', {
     object3D.add(grid);
 
     // Label axes
+    // TODO: add a text measuring function
+    // then measure label text length
+    // the use that length to
+    // sprogrammatically position labels
     var xLabelPosition = '0.2' + ' ' + '-0.1' + ' ' + '0.1';
     var xLabelRotation = '-45' + ' ' + '0' + ' ' + '0';
     d3.select('#' + originPointID)
@@ -65,8 +69,8 @@ AFRAME.registerComponent('graph', {
       .attr('position', xLabelPosition)
       .attr('rotation', xLabelRotation);
 
-    var yLabelPosition = (width + 0.1) + ' ' + (height / 2.2) + ' ' + (-depth);
-    var yLabelRotation = '0' + ' ' + '0' + ' ' + '90';
+    var yLabelPosition = (width + 0.17) + ' ' + '0.2' + ' ' + (-depth + 0.1);
+    var yLabelRotation = '0' + ' ' + '-30' + ' ' + '90';
     d3.select('#' + originPointID)
       .append('a-entity')
       .attr('id', 'y')
