@@ -35,9 +35,13 @@ AFRAME.registerComponent('graph', {
     var depth = data.depth;
 
     // These will be used to set the range of the axes' scales
-    var xRange = [0, width];
-    var yRange = [0, height];
-    var zRange = [0, -depth];
+    var xRange = [0 + 0.1, width - 0.1];
+    var yRange = [0 + 0.1, height - 0.1];
+    var zRange = [0 - 0.1, -depth + 0.1];
+
+    // var xRange = [0, width];
+    // var yRange = [0, height];
+    // var zRange = [0, -depth];
 
     /**
      * Create origin point.
@@ -52,40 +56,53 @@ AFRAME.registerComponent('graph', {
                  .attr('position', originPointPosition);
 
     // Create graphing area out of three textured planes
-    var grid = gridMaker(width, height, depth);
-    object3D.add(grid);
+    // var grid = gridMaker(width, height, depth);
+    // object3D.add(grid);
 
     // Label axes
     // TODO: add a text measuring function
     // then measure label text length
     // the use that length to
     // sprogrammatically position labels
-    var xLabelPosition = '0.2' + ' ' + '-0.1' + ' ' + '0.1';
-    var xLabelRotation = '-45' + ' ' + '0' + ' ' + '0';
-    d3.select('#' + originPointID)
-      .append('a-entity')
-      .attr('id', 'x')
-      .attr('bmfont-text', 'text: Sepal Length (cm)')
-      .attr('position', xLabelPosition)
-      .attr('rotation', xLabelRotation);
+    // var xLabelPosition = '0.2' + ' ' + '-0.1' + ' ' + '0.1';
+    // var xLabelRotation = '-45' + ' ' + '0' + ' ' + '0';
+    // d3.select('#' + originPointID)
+    //   .append('a-entity')
+    //   .attr('id', 'x')
+    //   .attr('bmfont-text', 'text: Sepal Length (cm)')
+    //   .attr('position', xLabelPosition)
+    //   .attr('rotation', xLabelRotation);
+    // var yLabelPosition = (width + 0.12) + ' ' + '0.2' + ' ' + (-depth + 0.08);
+    // var yLabelRotation = '0' + ' ' + '-30' + ' ' + '90';
+    // d3.select('#' + originPointID)
+    //   .append('a-entity')
+    //   .attr('id', 'y')
+    //   .attr('bmfont-text', 'text: Petal Length (cm)')
+    //   .attr('position', yLabelPosition)
+    //   .attr('rotation', yLabelRotation);
+    // var zLabelPosition = (width + 0.03) + ' ' + '0.03' + ' ' + (-depth + 0.27);
+    // var zLabelRotation = '-45' + ' ' + '-90' + ' ' + '0';
+    // d3.select('#' + originPointID)
+    //   .append('a-entity')
+    //   .attr('id', 'z')
+    //   .attr('bmfont-text', 'text: Sepal Width (cm)')
+    //   .attr('position', zLabelPosition)
+    //   .attr('rotation', zLabelRotation);
 
-    var yLabelPosition = (width + 0.12) + ' ' + '0.2' + ' ' + (-depth + 0.08);
-    var yLabelRotation = '0' + ' ' + '-30' + ' ' + '90';
-    d3.select('#' + originPointID)
-      .append('a-entity')
-      .attr('id', 'y')
-      .attr('bmfont-text', 'text: Petal Length (cm)')
-      .attr('position', yLabelPosition)
-      .attr('rotation', yLabelRotation);
+    // generate some random data
+    data.csv = [];
+    const colors = [ 'red', 'green', 'blue'];
+    // set the number of spheres in the scene
+    for (let i = 0; i < 48; i++) {
+      data.csv.push({
+        xV: Math.random(),
+        yV: Math.random(),
+        zV: Math.random(),
+        color: colors[Math.floor(Math.random() * 3)]
+      })
+    }
+    console.log('random data.csv', data.csv);
 
-    var zLabelPosition = (width + 0.03) + ' ' + '0.03' + ' ' + (-depth + 0.27);
-    var zLabelRotation = '-45' + ' ' + '-90' + ' ' + '0';
-    d3.select('#' + originPointID)
-      .append('a-entity')
-      .attr('id', 'z')
-      .attr('bmfont-text', 'text: Sepal Width (cm)')
-      .attr('position', zLabelPosition)
-      .attr('rotation', zLabelRotation);
 
     if (data.csv) {
       /* Plot data from CSV */
@@ -94,39 +111,52 @@ AFRAME.registerComponent('graph', {
 
       // Needed to assign species a color
       var cScale = d3.scaleOrdinal()
-      										 .domain([
-                              "Iris-virginica",
-                              "Iris-versicolor",
-                              "Iris-setosa"
-                            ])
-      										 .range([
-                            '#d62728', // red
-                            '#2ca02c', // green
-                            '#1f77b4' // blue
-                            ]);
+      	.domain([
+           "red",
+           "blue",
+           "green"
+         ])
+      	.range([
+         '#d62728', // red
+         '#2ca02c', // green
+         '#1f77b4' // blue
+         ]);
 
       // Convert CSV data from string to number
-      d3.csv(data.csv, function (data) {
-      	data.forEach(function (d) {
-      	  d.color = cScale(d.Species)
-      	});
-        plotData(data);
-      });
+      // d3.csv(data.csv, function (data) {
+      // 	data.forEach(function (d) {
+      // 	  d.color = cScale(d.color)
+      // 	});
+      //   plotData(data);
+      // });
 
-      var plotData = function (data) {
+      const plotDataOptions = {
+        xVariable: 'xV',
+        yVariable: 'yV',
+        zVariable: 'zV',
+        colorVariable: 'color'
+      }
+      plotData(data.csv, plotDataOptions);
+
+      function plotData(data, options) {
+        const xVariable = options.xVariable;
+        const yVariable = options.yVariable;
+        const zVariable = options.zVariable;
+        const colorVariable = options.colorVariable;
+
         // Scale x, y, and z values
-        var xExtent = d3.extent(data, function (d) { return d.SepalLengthCm; });
+        var xExtent = d3.extent(data, function (d) { return d[xVariable]; });
         var xScale = d3.scaleLinear()
                        .domain(xExtent)
                        .range([xRange[0], xRange[1]])
                        .clamp('true');
 
-        var yExtent = d3.extent(data, function (d) { return d.PetalLengthCm; });
+        var yExtent = d3.extent(data, function (d) { return d[yVariable]; });
         var yScale = d3.scaleLinear()
                        .domain(yExtent)
                        .range([yRange[0], yRange[1]]);
 
-        var zExtent = d3.extent(data, function (d) { return d.SepalWidthCm; });
+        var zExtent = d3.extent(data, function (d) { return d[zVariable] });
         var zScale = d3.scaleLinear()
                        .domain(zExtent)
                        .range([zRange[0], zRange[1]]);
@@ -136,12 +166,12 @@ AFRAME.registerComponent('graph', {
                    .data(data)
                    .enter()
                    .append('a-sphere')
-                   .attr('radius', 0.03)
+                   .attr('radius', 0.05)
                    .attr('color', function(d) {
                      return d.color;
                    })
                    .attr('position', function (d) {
-                     return xScale(d.SepalLengthCm) + ' ' + yScale(d.PetalLengthCm) + ' ' + zScale(d.SepalWidthCm);
+                     return xScale(d[xVariable]) + ' ' + yScale(d[yVariable]) + ' ' + zScale(d[zVariable]);
                    })
                    .attr('dynamic-body', '')
                    .classed('throwable', true)
@@ -250,17 +280,24 @@ function gridMaker (width, height, depth) {
  * dataEl - A data point's element.
  * graphBoxWidth - The width of the graph.
  */
-function labelMaker (dataEl, graphBoxWidth) {
+function labelMaker (dataEl, graphBoxWidth, options) {
+  const xVariable = options.xVariable;
+  const yVariable = options.yVariable;
+  const zVariable = options.zVariable;
+  const xLabel = options.xVariable;
+  const yLabel = options.yVariable;
+  const zLabel = options.zVariable;
+
   var dataElement = d3.select(dataEl);
   // Retrieve original data
   var dataValues = dataEl.__data__;
 
   // Create individual x, y, and z labels using original data values
   // round to 1 decimal space (should use d3 format for consistency later)
-  var sepalLength = 'Sepal length (cm): ' + dataValues.SepalLengthCm + '\n \n';
-  var petalLength = 'Petal length (cm): ' + dataValues.PetalLengthCm + '\n \n';
-  var sepalWidth = 'Sepal width (cm): ' + dataValues.SepalWidthCm;
-  var labelText = 'text: ' + sepalLength + petalLength + sepalWidth;
+  var xLabelText = 'xLabel: ' + dataValues[xVariable] + '\n \n';
+  var yLabelText = 'yLabel: ' + dataValues[yVariable] + '\n \n';
+  var zLabelText = 'zLabel: ' + dataValues[zVariable];
+  var labelText = 'text: ' + xLabelText + yLabelText + zLabelText;
 
   // Position label right of graph
   var padding = 0.2;

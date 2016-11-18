@@ -5,45 +5,89 @@
 <script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.0.3/dist/aframe-physics-system.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.3.0/d3.min.js"></script>
 <script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
 <script src="aframe-scatter-component.js"></script>
 <body>
-<a-scene physics="debug: true; restitution: 0.001; friction: 0.5; gravity: -2" antialias='true'>
+<a-scene physics="debug: true; restitution: 0.5; friction: 0.005; gravity: 0" antialias='true'>
 
   <!-- Camera -->
   <a-entity camera look-controls wasd-controls></a-entity>
 
-  <!-- Title -->
-  <a-entity position="0 2 -1.8" rotation="35 0 0">
-    <a-entity position="-0.8 0.6 0">
-      <a-entity bmfont-text="text: A Comparison of"></a-entity>
-    </a-entity>
-    <a-entity position="-0.72 0.4 0">
-      <a-entity bmfont-text="text: Three Species"></a-entity>
-    </a-entity>
-    <a-entity position="-0.45 0.2 0">
-      <a-entity bmfont-text="text: of Iris"></a-entity>
-    </a-entity>
-  </a-entity>
-
-  <!-- Legend -->
-  <a-entity position="1.4 0.5 -1.5" rotation="0 -45 0" scale="0.8 0.8 0.8">
-    <a-entity bmfont-text="text: Iris-virginica; color: #d62728" position="0 1 0">
-      <a-sphere radius="0.03" color='#d62728' position="-0.1 0.05 0"></a-sphere>
-    </a-entity>
-    <a-entity bmfont-text="text: Iris-versicolor; color: #2ca02c" position="0 0.5 0">
-      <a-sphere radius="0.03" color='#2ca02c' position="-0.1 0.05 0"></a-sphere>
-    </a-entity>
-    <a-entity bmfont-text="text: Iris-setosa; color: #1f77b4">
-      <a-sphere radius="0.03" color='#1f77b4' position="-0.1 0.05 0"></a-sphere>
-    </a-entity>
-  </a-entity>
-
   <!-- Graph -->
   <a-entity position="0 0 -1"
-            graph="csv:iris.csv;
-            width: 2;
+            graph="width: 2;
             height: 2;
             depth: 2">
+  </a-entity>
+
+  <!-- a box of planes -->
+  <a-entity>
+    <!-- front -->
+    <a-box 
+      color="teal" 
+      height="2"
+      width="2"
+      depth="0.01"
+      position="0 1 0"
+      rotation="0 0 0"
+      static-body
+      material="transparent:true; opacity:0.2">
+    </a-box>
+    <!-- back -->
+    <a-box 
+      color="teal" 
+      height="2"
+      width="2"
+      depth="0.01"
+      position="0 1 -2"
+      rotation="0 0 0"
+      static-body
+      material="transparent:true; opacity:0.2">
+    </a-box>
+    <!-- top -->
+    <a-box 
+      color="teal" 
+      height="2"
+      width="2"
+      depth="0.01"
+      position="0 2 -1"
+      rotation="90 0 0"
+      static-body
+      material="transparent:true; opacity:0.2">
+    </a-box>
+    <!-- bottom -->
+    <a-box 
+      color="teal" 
+      height="2"
+      width="2"
+      depth="0.01"
+      position="0 0 -1"
+      rotation="90 0 0"
+      static-body
+      material="transparent:true; opacity:0.2">
+    </a-box>
+    <!-- left -->
+    <a-box
+      color="teal" 
+      height="2"
+      width="2"
+      depth="0.01"
+      position="1 1 -1"
+      rotation="0 90 0"
+      static-body
+      material="transparent:true; opacity:0.2">
+    </a-box>
+    <!-- right -->
+    <a-box
+      color="teal" 
+      height="2"
+      width="2"
+      depth="0.01"
+      position="-1 1 -1"
+      rotation="0 90 0"
+      static-body
+      material="transparent:true; opacity:0.2">
+    </a-box>
   </a-entity>
 
   <a-sky color="#ECECEC"></a-sky>
