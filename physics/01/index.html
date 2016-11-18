@@ -2,12 +2,12 @@
 <meta charset="utf-8">
 <script src="aframe.min.js"></script>
 <script src="aframe-extras.min.js"></script>
- <script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.0.3/dist/aframe-physics-system.min.js"></script>
+<script src="https://cdn.rawgit.com/donmccurdy/aframe-physics-system/v1.0.3/dist/aframe-physics-system.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.3.0/d3.min.js"></script>
 <script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
 <script src="aframe-scatter-component.js"></script>
 <body>
-<a-scene physics="debug: true; restitution: 0.001; friction: 0.5; gravity: 0" antialias='true'>
+<a-scene physics="debug: true; restitution: 0.001; friction: 0.5; gravity: -2" antialias='true'>
 
   <!-- Camera -->
   <a-entity camera look-controls wasd-controls></a-entity>
@@ -66,22 +66,6 @@
     d3.select('a-scene')
       .append('a-entity')
         .attr('id', 'rightController')
-        .attr('vive-controls', 'hand: right')
-        .attr('static-body', 'shape: sphere; sphereRadius: 0.02;')
-        .attr('sphere-collider', 'objects: .throwable')
-        .attr('grab', '')
-    // add second left controller
-    d3.select('a-scene')
-      .append('a-entity')
-        .attr('id', 'leftControllerTwo')
-        .attr('vive-controls', 'hand: left')
-        .attr('static-body', 'shape: sphere; sphereRadius: 0.02;')
-        .attr('sphere-collider', 'objects: .throwable')
-        .attr('grab', '')
-    // add second right controller
-    d3.select('a-scene')
-      .append('a-entity')
-        .attr('id', 'rightControllerTwo')
         .attr('vive-controls', 'hand: right')
         .attr('static-body', 'shape: sphere; sphereRadius: 0.02;')
         .attr('sphere-collider', 'objects: .throwable')

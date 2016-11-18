@@ -56,26 +56,36 @@ AFRAME.registerComponent('graph', {
     object3D.add(grid);
 
     // Label axes
-    var xLabelPosition = (width / 3.2) + ' ' + '-0.1' + ' ' + '0';
+    // TODO: add a text measuring function
+    // then measure label text length
+    // the use that length to
+    // sprogrammatically position labels
+    var xLabelPosition = '0.2' + ' ' + '-0.1' + ' ' + '0.1';
+    var xLabelRotation = '-45' + ' ' + '0' + ' ' + '0';
     d3.select('#' + originPointID)
       .append('a-entity')
       .attr('id', 'x')
       .attr('bmfont-text', 'text: Sepal Length (cm)')
-      .attr('position', xLabelPosition);
+      .attr('position', xLabelPosition)
+      .attr('rotation', xLabelRotation);
 
-    var yLabelPosition = (width + 0.05) + ' ' + (height / 2.2) + ' ' + (-depth);
+    var yLabelPosition = (width + 0.12) + ' ' + '0.2' + ' ' + (-depth + 0.08);
+    var yLabelRotation = '0' + ' ' + '-30' + ' ' + '90';
     d3.select('#' + originPointID)
       .append('a-entity')
       .attr('id', 'y')
       .attr('bmfont-text', 'text: Petal Length (cm)')
-      .attr('position', yLabelPosition);
+      .attr('position', yLabelPosition)
+      .attr('rotation', yLabelRotation);
 
-    var zLabelPosition = (width + 0.02) + ' ' + '-0.05' + ' ' + (-depth / 2);
+    var zLabelPosition = (width + 0.03) + ' ' + '0.03' + ' ' + (-depth + 0.27);
+    var zLabelRotation = '-45' + ' ' + '-90' + ' ' + '0';
     d3.select('#' + originPointID)
       .append('a-entity')
       .attr('id', 'z')
       .attr('bmfont-text', 'text: Sepal Width (cm)')
-      .attr('position', zLabelPosition);
+      .attr('position', zLabelPosition)
+      .attr('rotation', zLabelRotation);
 
     if (data.csv) {
       /* Plot data from CSV */
@@ -83,9 +93,17 @@ AFRAME.registerComponent('graph', {
       var originPoint = d3.select('#originPoint' + data.id);
 
       // Needed to assign species a color
-      var cScale = d3.scale.ordinal()
-      										 .domain(["Iris-virginica", "Iris-versicolor", "Iris-setosa"])
-      										 .range(["green", "blue", "red"]);
+      var cScale = d3.scaleOrdinal()
+      										 .domain([
+                              "Iris-virginica",
+                              "Iris-versicolor",
+                              "Iris-setosa"
+                            ])
+      										 .range([
+                            '#d62728', // red
+                            '#2ca02c', // green
+                            '#1f77b4' // blue
+                            ]);
 
       // Convert CSV data from string to number
       d3.csv(data.csv, function (data) {
@@ -98,18 +116,18 @@ AFRAME.registerComponent('graph', {
       var plotData = function (data) {
         // Scale x, y, and z values
         var xExtent = d3.extent(data, function (d) { return d.SepalLengthCm; });
-        var xScale = d3.scale.linear()
+        var xScale = d3.scaleLinear()
                        .domain(xExtent)
                        .range([xRange[0], xRange[1]])
                        .clamp('true');
 
         var yExtent = d3.extent(data, function (d) { return d.PetalLengthCm; });
-        var yScale = d3.scale.linear()
+        var yScale = d3.scaleLinear()
                        .domain(yExtent)
                        .range([yRange[0], yRange[1]]);
 
         var zExtent = d3.extent(data, function (d) { return d.SepalWidthCm; });
-        var zScale = d3.scale.linear()
+        var zScale = d3.scaleLinear()
                        .domain(zExtent)
                        .range([zRange[0], zRange[1]]);
 
@@ -125,6 +143,8 @@ AFRAME.registerComponent('graph', {
                    .attr('position', function (d) {
                      return xScale(d.SepalLengthCm) + ' ' + yScale(d.PetalLengthCm) + ' ' + zScale(d.SepalWidthCm);
                    })
+                   .attr('dynamic-body', '')
+                   .classed('throwable', true)
                    .on('mouseenter', mouseEnter);
 
         /**
