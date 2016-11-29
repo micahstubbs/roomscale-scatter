@@ -130,7 +130,7 @@ AFRAME.registerComponent('graph', {
         console.log('colorVariableDomain', colorVariableDomain);
 
       	data.forEach(function (d) {
-      	  d.color = cScale(d.Species)
+      	  d.color = cScale(d[colorVariable])
       	});
         plotData(data);
       });
