@@ -71,8 +71,8 @@ AFRAME.registerComponent('graph', {
     const originPointID = `originPoint${data.id}`;
 
     d3.select(el).append('a-entity')
-                 .attr('id', originPointID)
-                 .attr('position', originPointPosition);
+      .attr('id', originPointID)
+      .attr('position', originPointPosition);
 
     // Create graphing area out of three textured planes
     const grid = gridMaker(width, height, depth);
@@ -83,8 +83,8 @@ AFRAME.registerComponent('graph', {
     // then measure label text length
     // the use that length to
     // sprogrammatically position labels
-    const xLabelPosition = '0.2' + ' ' + '-0.1' + ' ' + '0.1';
-    const xLabelRotation = '-45' + ' ' + '0' + ' ' + '0';
+    const xLabelPosition = `0.2 -0.1 0.1'`;
+    const xLabelRotation = `-45 0 0`;
     d3.select(`#${originPointID}`)
       .append('a-entity')
       .attr('id', 'x')
@@ -93,7 +93,7 @@ AFRAME.registerComponent('graph', {
       .attr('rotation', xLabelRotation);
 
     const yLabelPosition = `${width + 0.12} 0.2 ${-depth + 0.08}`;
-    const yLabelRotation = '0' + ' ' + '-30' + ' ' + '90';
+    const yLabelRotation = `0 -30 90`;
     d3.select(`#${originPointID}`)
       .append('a-entity')
       .attr('id', 'y')
@@ -102,7 +102,7 @@ AFRAME.registerComponent('graph', {
       .attr('rotation', yLabelRotation);
 
     const zLabelPosition = `${width + 0.03} 0.03 ${-depth + 0.27}`;
-    const zLabelRotation = '-45' + ' ' + '-90' + ' ' + '0';
+    const zLabelRotation = `-45 -90 0`;
     d3.select(`#${originPointID}`)
       .append('a-entity')
       .attr('id', 'z')
@@ -112,7 +112,6 @@ AFRAME.registerComponent('graph', {
 
     if (data.csv) {
       /* Plot data from CSV */
-
       const originPoint = d3.select(`#originPoint${data.id}`);
 
       // Needed to assign species a color
@@ -139,29 +138,29 @@ AFRAME.registerComponent('graph', {
         // Scale x, y, and z values
         const xExtent = d3.extent(data, d => d.SepalLengthCm);
         const xScale = d3.scaleLinear()
-                       .domain(xExtent)
-                       .range([xRange[0], xRange[1]])
-                       .clamp('true');
+          .domain(xExtent)
+          .range([xRange[0], xRange[1]])
+          .clamp('true');
 
         const yExtent = d3.extent(data, d => d.PetalLengthCm);
         const yScale = d3.scaleLinear()
-                       .domain(yExtent)
-                       .range([yRange[0], yRange[1]]);
+          .domain(yExtent)
+          .range([yRange[0], yRange[1]]);
 
         const zExtent = d3.extent(data, d => d.SepalWidthCm);
         const zScale = d3.scaleLinear()
-                       .domain(zExtent)
-                       .range([zRange[0], zRange[1]]);
+          .domain(zExtent)
+          .range([zRange[0], zRange[1]]);
 
         // Append data to graph and attach event listeners
         originPoint.selectAll('a-sphere')
-                   .data(data)
-                   .enter()
-                   .append('a-sphere')
-                   .attr('radius', 0.03)
-                   .attr('color', d => d.color)
-                   .attr('position', d => `${xScale(d.SepalLengthCm)} ${yScale(d.PetalLengthCm)} ${zScale(d.SepalWidthCm)}`)
-                   .on('mouseenter', mouseEnter);
+          .data(data)
+          .enter()
+          .append('a-sphere')
+          .attr('radius', 0.03)
+          .attr('color', d => d.color)
+          .attr('position', d => `${xScale(d.SepalLengthCm)} ${yScale(d.PetalLengthCm)} ${zScale(d.SepalWidthCm)}`)
+          .on('mouseenter', mouseEnter);
 
         /**
          * Event listener adds and removes data labels.
@@ -217,14 +216,18 @@ function planeMaker (horizontal, vertical) {
   const vVertical = vertical * 4;
 
   // Load a texture, set wrap mode to repeat
-  const texture = new THREE.TextureLoader().load('https://cdn.rawgit.com/bryik/aframe-scatter-component/master/assets/grid.png');
+  const texture = new THREE.TextureLoader()
+    .load('https://cdn.rawgit.com/bryik/aframe-scatter-component/master/assets/grid.png');
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
   texture.anisotropy = 16;
   texture.repeat.set(uHorizontal, vVertical);
 
   // Create material and geometry
-  const material = new THREE.MeshBasicMaterial({map: texture, side: THREE.DoubleSide});
+  const material = new THREE.MeshBasicMaterial({
+    map: texture,
+    side: THREE.DoubleSide
+  });
   const geometry = new THREE.PlaneGeometry(horizontal, vertical);
 
   return new THREE.Mesh(geometry, material);
@@ -289,27 +292,27 @@ function labelMaker (dataEl, graphBoxWidth) {
   // The beam's pivot is in the center
   const beamPosition = `${labelXPosition - (beamWidth / 2)}0 0`;
   dataElement.append('a-box')
-             .attr('id', 'tempDataBeam')
-             .attr('height', '0.01')
-             .attr('width', beamWidth)
-             .attr('depth', '0.01')
-             .attr('color', 'purple')
-             .attr('position', beamPosition);
+    .attr('id', 'tempDataBeam')
+    .attr('height', '0.01')
+    .attr('width', beamWidth)
+    .attr('depth', '0.01')
+    .attr('color', 'purple')
+    .attr('position', beamPosition);
 
   // Add label
   dataElement.append('a-entity')
-             .attr('id', 'tempDataLabel')
-             .attr('bmfont-text', labelText)
-             .attr('position', labelPosition);
+    .attr('id', 'tempDataLabel')
+    .attr('bmfont-text', labelText)
+    .attr('position', labelPosition);
   
 	const backgroundPosition = `${labelXPosition + 1.15} 0.02 -0.1`;
   // Add background card
   dataElement.append('a-plane')
-  					 .attr('id', 'tempDataBackground')
-  					 .attr('width', '2.3')
-  					 .attr('height', '1.3')
-  					 .attr('color', '#ECECEC')
-  					 .attr('position', backgroundPosition);
+  	.attr('id', 'tempDataBackground')
+  	.attr('width', '2.3')
+  	.attr('height', '1.3')
+  	.attr('color', '#ECECEC')
+  	.attr('position', backgroundPosition);
 }
 
 function onlyUnique(value, index, self) { 
