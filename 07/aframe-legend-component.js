@@ -47,7 +47,10 @@ AFRAME.registerComponent('legend', {
       // allow user to specify colorVariableDomain
       // to control sort order of legend items
       let colorVariableDomain;
-      if (typeof options.colorVariableDomain !== 'undefined') {
+      if (
+        typeof options.colorVariableDomain !== 'undefined' &&
+        options.colorVariableDomain.length > 0
+      ) {
         colorVariableDomain = options.colorVariableDomain;
       } else {
         colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
