@@ -353,6 +353,9 @@ function labelMaker (dataEl, graphBoxWidth, options) {
   	.attr('position', backgroundPosition);
 }
 
+/**
+ * onlyUnique() tests if values in an array are unique
+ */
 function onlyUnique(value, index, self) { 
   return self.indexOf(value) === index;
 }
