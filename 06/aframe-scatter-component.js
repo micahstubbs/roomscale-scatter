@@ -34,6 +34,15 @@ AFRAME.registerComponent('graph', {
     colors: {
       type: 'array'
     },
+    xVariable: {
+      type: 'string'
+    },
+    yVariable: {
+      type: 'string'
+    },
+    zVariable: {
+      type: 'string'
+    }
   },
 
   /**
@@ -56,6 +65,13 @@ AFRAME.registerComponent('graph', {
     const colorVariable = data.colorVariable;
     const colors = data.colors;
     console.log('colors', colors);
+
+    const xVariable = data.xVariable;
+    const yVariable = data.yVariable;
+    const zVariable = data.zVariable;
+    console.log('xVariable', xVariable);
+    console.log('yVariable', yVariable);
+    console.log('zVariable', zVariable);
 
     // These will be used to set the range of the axes' scales
     const xRange = [0, width];
@@ -136,18 +152,18 @@ AFRAME.registerComponent('graph', {
 
       function plotData (data) {
         // Scale x, y, and z values
-        const xExtent = d3.extent(data, d => d.SepalLengthCm);
+        const xExtent = d3.extent(data, d => d[xVariable]);
         const xScale = d3.scaleLinear()
           .domain(xExtent)
           .range([xRange[0], xRange[1]])
           .clamp('true');
 
-        const yExtent = d3.extent(data, d => d.PetalLengthCm);
+        const yExtent = d3.extent(data, d => d[yVariable]);
         const yScale = d3.scaleLinear()
           .domain(yExtent)
           .range([yRange[0], yRange[1]]);
 
-        const zExtent = d3.extent(data, d => d.SepalWidthCm);
+        const zExtent = d3.extent(data, d => d[zVariable]);
         const zScale = d3.scaleLinear()
           .domain(zExtent)
           .range([zRange[0], zRange[1]]);
@@ -159,7 +175,7 @@ AFRAME.registerComponent('graph', {
           .append('a-sphere')
           .attr('radius', 0.03)
           .attr('color', d => d.color)
-          .attr('position', d => `${xScale(d.SepalLengthCm)} ${yScale(d.PetalLengthCm)} ${zScale(d.SepalWidthCm)}`)
+          .attr('position', d => `${xScale(d[xVariable])} ${yScale(d[yVariable])} ${zScale(d[zVariable])}`)
           .on('mouseenter', mouseEnter);
 
         /**
