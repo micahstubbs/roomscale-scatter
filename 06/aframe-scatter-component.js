@@ -136,8 +136,8 @@ AFRAME.registerComponent('graph', {
       /* Plot data from CSV */
       const originPoint = d3.select(`#originPoint${data.id}`);
 
-      // Needed to assign species a color
-      const cScale = d3.scaleOrdinal()
+      // create color scale for points
+      const colorScale = d3.scaleOrdinal()
         .range(colors);
 
       // TODO: don't shadow the data variable
@@ -147,11 +147,11 @@ AFRAME.registerComponent('graph', {
       // Convert CSV data from string to number
       d3.csv(data.csv, data => {
         const colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
-        cScale.domain(colorVariableDomain);
+        colorScale.domain(colorVariableDomain);
         console.log('colorVariableDomain', colorVariableDomain);
 
       	data.forEach(d => {
-      	  d.color = cScale(d[colorVariable])
+      	  d.color = colorScale(d[colorVariable])
       	});
         plotData(data);
       });

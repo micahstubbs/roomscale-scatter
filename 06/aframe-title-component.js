@@ -21,7 +21,8 @@ AFRAME.registerComponent('title', {
     const line2Text = data.line2Text;
 
     const titleEntity = d3.select('a-scene')
-      .append('a-entity')
+      .append('a-entity') 
+      .attr('class', 'title')
       .attr('position', '0 2 -1.8')
       .attr('rotation', '35 0 0');
 
