@@ -154,7 +154,10 @@ AFRAME.registerComponent('graph', {
         console.log('colorVariableDomain', colorVariableDomain);
 
       	data.forEach(d => {
-      	  d.color = colorScale(d[colorVariable])
+          d[xVariable] = Number(d[xVariable]);
+          d[yVariable] = Number(d[yVariable]);
+          d[zVariable] = Number(d[zVariable]);
+      	  d.color = colorScale(d[colorVariable]);
       	});
         plotData(data);
       });

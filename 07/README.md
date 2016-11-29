@@ -1,10 +1,6 @@
-now with a new dataset, to find just how reusable this chart actually is 
+a reusable chart iteration, where are dataset-specific things are specified in configuration and abstracted out of the code 
 
----
-
-a reusable chart iteration where are dataset-specific things are specified in configuration and abstracted out of the code 
-
----
+--
 
 a roomscale scatterplot targeting the [HTC Vive](https://en.wikipedia.org/wiki/HTC_Vive)
 

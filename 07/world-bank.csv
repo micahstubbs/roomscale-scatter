@@ -1,0 +1,180 @@
+Country,CountryCode,Region,Continent,GDP,GDP_perCapita,lifeExpectancy
+Afghanistan,AFG,Asia | South & West,Asia,15936784437.22,561.2,59.60009756
+Albania,ALB,Europe | South & East,Europe,11926957254.63,4094.36,76.9785122
+Algeria,DZA,Africa | North & East,Africa,161207304960.46,4349.57,70.61660976
+Angola,AGO,Africa | South & West,Africa,82470894868.33,4218.65,50.65417073
+Antigua and Barbuda,ATG,America | North & Central,Americas,1135539037.04,13017.31,75.33390244
+Argentina,ARG,America | South,Americas,462703793707.19,11460.38,75.66356098
+Armenia,ARM,Asia | South & West,Asia,9260287416.06,3124.78,74.21965854
+Aruba,ABW,America | North & Central,Americas,2467703910.61,24289.14,74.95202439
+Australia,AUS,Oceania,Oceania,1141267760188.09,51800.93,81.69512195
+Austria,AUT,Europe | North & West,Europe,389656071767.18,46590.61,80.5804878
+Azerbaijan,AZE,Asia | South & West,Asia,52902703376.11,5842.81,70.45029268
+"Bahamas, The",BHS,America | North & Central,Americas,7910000000,21941.87,74.59239024
+Bahrain,BHR,Asia | South & West,Asia,25713544824.94,20545.97,76.26485366
+Bangladesh,BGD,Asia | South & West,Asia,115279077465.23,762.8,69.48580488
+Barbados,BRB,America | North & Central,Americas,4433700000,15812.28,74.80178049
+Belarus,BLR,Europe | South & East,Europe,55220932613.96,5818.85,70.40487805
+Belgium,BEL,Europe | North & West,Europe,484404271608.09,44358.26,80.23414634
+Belize,BLZ,America | North & Central,Americas,1397113450,4527.34,73.2704878
+Benin,BEN,Africa | South & West,Africa,6561782312.62,690,58.74668293
+Bermuda,BMU,America | North & Central,Americas,5744414000,88207.33,79.28853659
+Bhutan,BTN,Asia | South & West,Asia,1585396256.12,2211.34,67.00468293
+Bolivia,BOL,America | South,Americas,19649631308.16,1934.67,66.31970732
+Bosnia and Herzegovina,BIH,Europe | South & East,Europe,16847493058.85,4380.6,75.80668293
+Botswana,BWA,Africa | South & West,Africa,13746712711.21,6980.36,46.44029268
+Brazil,BRA,America | South,Americas,2143067871759.89,10978.26,73.07531707
+Brunei Darussalam,BRN,Asia | East & Central,Asia,12369708858.9,30880.34,77.98865854
+Bulgaria,BGR,Europe | South & East,Europe,48669060511.71,6580.81,73.51219512
+Burkina Faso,BFA,Africa | South & West,Africa,8992678844.36,578.67,55.0067561
+Burundi,BDI,Africa | North & East,Africa,2026864414.47,219.53,52.62402439
+Cabo Verde,CPV,Africa | South & West,Africa,1664310632.51,3413.26,73.85697561
+Cambodia,KHM,Asia | East & Central,Asia,11242266333.93,782.62,70.64336585
+Cameroon,CMR,Africa | South & West,Africa,23622482954.8,1145.37,53.69482927
+Canada,CAN,America | North & Central,Americas,1614072093764.07,47465.35,80.8934878
+Central African Republic,CAF,Africa | South & West,Africa,1986014759.2,456.56,48.09873171
+Chad,TCD,Africa | South & West,Africa,10657705536.5,909.3,49.76985366
+Chile,CHL,America | South,Americas,217501911333.71,12681.77,79.05046341
+China,CHN,Asia | East & Central,Asia,5930502270312.98,4433.34,74.88502439
+Colombia,COL,America | South,Americas,287018184637.53,6179.77,73.36768293
+Comoros,COM,Africa | North & East,Africa,516962949.5,756.81,60.20341463
+"Congo, Rep.",COG,Africa | South & West,Africa,12007880067.44,2920.41,57.20402439
+Costa Rica,CRI,America | North & Central,Americas,36298327669.9,7773.19,79.27970732
+Cote d'Ivoire,CIV,Africa | South & West,Africa,24884503950.68,1311.33,49.67529268
+Croatia,HRV,Europe | South & East,Europe,59643818181.82,13500.85,76.47560976
+Cuba,CUB,America | North & Central,Americas,64328220000,5701.96,78.71778049
+Cyprus,CYP,Asia | South & West,Asia,23132450331.13,27889.04,79.30982927
+Czech Republic,CZE,Europe | South & East,Europe,207016402026.36,19764.02,77.42439024
+Denmark,DNK,Europe | North & West,Europe,319812413596.9,57647.93,79.1
+Djibouti,DJI,Africa | North & East,Africa,1128611700.36,1353.19,60.29119512
+Dominican Republic,DOM,America | North & Central,Americas,53042943731.14,5295.4,72.79214634
+Ecuador,ECU,America | South,Americas,69555367000,4636.69,75.64770732
+"Egypt, Arab Rep.",EGY,Africa | North & East,Africa,218887812549.85,2803.53,70.45082927
+El Salvador,SLV,America | North & Central,Americas,21418300000,3444.46,71.63441463
+Equatorial Guinea,GNQ,Africa | South & West,Africa,11582917790.3,16638.13,51.53307317
+Eritrea,ERI,Africa | North & East,Africa,2117039510.7,368.75,61.18509756
+Estonia,EST,Europe | North & West,Europe,19479012423.35,14629.65,75.42926829
+Ethiopia,ETH,Africa | North & East,Africa,29933790334.34,343.69,61.46795122
+Fiji,FJI,Oceania,Oceania,3140508835.95,3649.38,69.38231707
+Finland,FIN,Europe | North & West,Europe,247799815768.48,46202.42,79.87073171
+France,FRA,Europe | North & West,Europe,2646837111794.78,40706.08,81.66341463
+Gabon,GAB,Africa | South & West,Africa,14569527124.62,9362.11,62.2897561
+"Gambia, The",GMB,Africa | South & West,Africa,951827284.92,566.35,58.1335122
+Georgia,GEO,Asia | South & West,Asia,11638536834.43,2613.76,73.67473171
+Germany,DEU,Europe | North & West,Europe,3412008772736.86,41723.37,79.98780488
+Ghana,GHA,Africa | South & West,Africa,32174839712.79,1326.09,60.59956098
+Greece,GRC,Europe | South & East,Europe,299598056253.27,26861.46,80.38780488
+Grenada,GRD,America | North & Central,Americas,771015875.27,7365.67,72.33687805
+Guatemala,GTM,America | North & Central,Americas,41337958251.63,2882.39,70.99597561
+Guinea,GIN,Africa | South & West,Africa,4735956475.83,435.45,55.298
+Guinea-Bissau,GNB,Africa | South & West,Africa,847491366.89,534.15,53.55843902
+Guyana,GUY,America | South,Americas,2259288396.24,2873.95,65.7024878
+Haiti,HTI,America | North & Central,Americas,6622541528.57,669.19,61.8667561
+Honduras,HND,America | North & Central,Americas,15839344591.98,2078.33,72.85031707
+"Hong Kong SAR, China",HKG,Asia | East & Central,Asia,228637697575.04,32550,82.97804878
+Hungary,HUN,Europe | South & East,Europe,129585601615.85,12958.53,74.20731707
+Iceland,ISL,Europe | North & West,Europe,13261035516.56,41695.99,81.89756098
+India,IND,Asia | South & West,Asia,1708458876829.92,1417.07,65.6942439
+Indonesia,IDN,Asia | East & Central,Asia,709190823319.75,2946.66,70.16785366
+"Iran, Islamic Rep.",IRN,Asia | South & West,Asia,422567967404.51,5674.92,73.13014634
+Iraq,IRQ,Asia | South & West,Asia,138516722649.57,4473.71,68.8297561
+Ireland,IRL,Europe | North & West,Europe,218435251789.12,47900.84,80.74390244
+Israel,ISR,Asia | South & West,Asia,232907996790.59,30550.92,81.60243902
+Italy,ITA,Europe | South & East,Europe,2126620402889.09,35875.73,82.03658537
+Jamaica,JAM,America | North & Central,Americas,13230844040.04,4917.02,72.84712195
+Japan,JPN,Asia | East & Central,Asia,5495387182996.1,42909.25,82.84268293
+Jordan,JOR,Asia | South & West,Asia,26425379436.62,4370.72,73.43587805
+Kazakhstan,KAZ,Asia | East & Central,Asia,148047348240.64,9070.65,68.29536585
+Kenya,KEN,Africa | North & East,Africa,40000138830.87,977.78,59.54707317
+Kiribati,KIR,Oceania,Oceania,150431113.56,1539.05,67.88382927
+"Korea, Rep.",KOR,Asia | East & Central,Asia,1094499350178.46,22151.21,80.55121951
+Kuwait,KWT,Asia | South & West,Asia,115428557470.18,38584.48,74.16192683
+Kyrgyz Republic,KGZ,Asia | East & Central,Asia,4794357795.07,880.04,69.3
+Lao PDR,LAO,Asia | East & Central,Asia,7181441151.89,1122.85,66.89843902
+Latvia,LVA,Europe | North & West,Europe,24009680459.99,11446.51,73.48292683
+Lebanon,LBN,Asia | South & West,Asia,38009950248.76,8755.85,79.25278049
+Lesotho,LSO,Africa | South & West,Africa,2175692207.16,1083.02,47.48341463
+Liberia,LBR,Africa | South & West,Africa,1292696475.96,326.6,59.43431707
+Libya,LBY,Africa | North & East,Africa,74755288916.96,12375.45,74.7924878
+Lithuania,LTU,Europe | North & West,Europe,36709511568.12,11852.17,73.26829268
+Luxembourg,LUX,Europe | North & West,Europe,52143650382.99,102856.97,80.63170732
+"Macao SAR, China",MAC,Asia | East & Central,Asia,28359706123.1,53045.88,79.69295122
+"Macedonia, FYR",MKD,Europe | South & East,Europe,9338674078.31,4442.3,74.72214634
+Madagascar,MDG,Africa | North & East,Africa,8729936135.74,414.14,63.34973171
+Malawi,MWI,Africa | North & East,Africa,5398616984.59,359.58,53.46570732
+Malaysia,MYS,Asia | East & Central,Asia,247533525517.7,8754.24,74.49558537
+Maldives,MDV,Asia | South & West,Asia,2134104883.7,6552.48,76.78631707
+Mali,MLI,Africa | South & West,Africa,9422267259.99,673.69,53.77073171
+Malta,MLT,Europe | South & East,Europe,8163841059.6,19695.26,81.39756098
+Mauritania,MRT,Africa | South & West,Africa,3526947608.88,977.15,61.0232439
+Mauritius,MUS,Africa | North & East,Africa,9718233910.68,7772.1,72.96731707
+Mexico,MEX,America | North & Central,Americas,1051627949327,8920.69,76.69029268
+"Micronesia, Fed. Sts.",FSM,Oceania,Oceania,294117200,2838.45,68.62173171
+Moldova,MDA,Europe | South & East,Europe,5811604051.97,1631.54,68.45812195
+Mongolia,MNG,Asia | East & Central,Asia,6200357070.11,2285.65,66.89460976
+Montenegro,MNE,Europe | South & East,Europe,4114881346.94,6636.07,74.41673171
+Morocco,MAR,Africa | North & East,Africa,90770671431.67,2822.73,70.17158537
+Mozambique,MOZ,Africa | North & East,Africa,10165353591.17,424.13,49.13707317
+Namibia,NAM,Africa | South & West,Africa,11281996426.04,5177.68,62.48029268
+Nepal,NPL,Asia | South & West,Asia,15994094606.97,595.77,67.10492683
+Netherlands,NLD,Europe | North & West,Europe,836389937229.2,50338.25,80.70243902
+New Zealand,NZL,Oceania,Oceania,143466743661.01,32975.55,80.70243902
+Nicaragua,NIC,America | North & Central,Americas,8938209651.44,1535.19,73.79512195
+Niger,NER,Africa | South & West,Africa,5718589550.16,359.8,56.98563415
+Nigeria,NGA,Africa | South & West,Africa,369062403181.95,2310.86,51.28941463
+Norway,NOR,Europe | North & West,Europe,420945705225.42,86096.14,80.99756098
+Oman,OMN,Asia | South & West,Asia,58641352878.43,20922.66,76.04580488
+Pakistan,PAK,Asia | South & West,Asia,177165635077.07,1023.2,66.12634146
+Panama,PAN,America | North & Central,Americas,28814100000,7833.9,76.94870732
+Papua New Guinea,PNG,Oceania,Oceania,9717175432.14,1416.72,62.00780488
+Paraguay,PRY,America | South,Americas,20030529733.44,3100.84,72.02665854
+Peru,PER,America | South,Americas,148522810971.5,5075.48,73.90509756
+Philippines,PHL,Asia | East & Central,Asia,199589447424.07,2135.92,68.23026829
+Poland,POL,Europe | South & East,Europe,476687891752.07,12484.07,76.24634146
+Portugal,PRT,Europe | South & East,Europe,238303443425.21,22538.65,79.02682927
+Qatar,QAT,Asia | South & West,Asia,125122249141.25,71510.16,78.14604878
+Russian Federation,RUS,Europe | South & East,Europe,1524916112078.87,10709.77,68.85609756
+Rwanda,RWA,Africa | North & East,Africa,5698548923.48,525.85,62.21214634
+Samoa,WSM,Oceania,Oceania,643059403.01,3456.77,72.40802439
+Sao Tome and Principe,STP,Africa | South & West,Africa,201037916.58,1127.98,65.85368293
+Saudi Arabia,SAU,Asia | South & West,Asia,526811466666.67,19326.58,75.07560976
+Senegal,SEN,Africa | South & West,Africa,12932427724.32,998.6,62.84187805
+Serbia,SRB,Europe | South & East,Europe,39368633038.12,5399.3,74.33658537
+Seychelles,SYC,Africa | North & East,Africa,973360306.52,10842.82,73.19756098
+Sierra Leone,SLE,Africa | South & West,Africa,2578159495.56,448.22,44.83895122
+Singapore,SGP,Asia | East & Central,Asia,236420337242.78,46569.69,81.54146341
+Slovak Republic,SVK,Europe | South & East,Europe,89011919205.3,16509.9,75.11219512
+Slovenia,SVN,Europe | South & East,Europe,47972988741.72,23417.64,79.42195122
+Solomon Islands,SLB,Oceania,Oceania,681587104.77,1294.69,67.06665854
+South Africa,ZAF,Africa | South & West,Africa,375349442837.19,7389.96,54.3907561
+Spain,ESP,Europe | South & East,Europe,1431587612302.26,30736,81.62682927
+Sri Lanka,LKA,Asia | South & West,Asia,49567521669.91,2400.02,73.75526829
+St. Lucia,LCA,America | North & Central,Americas,1244297407.41,7014.2,74.41102439
+St. Vincent and the Grenadines,VCT,America | North & Central,Americas,681225962.96,6231.71,72.18492683
+Sudan,SDN,Africa | North & East,Africa,65632081240.3,1439.52,61.47829268
+Suriname,SUR,America | South,Americas,4368398047.64,8321.39,70.33582927
+Swaziland,SWZ,Africa | South & West,Africa,3891575151.61,3261.6,48.3457561
+Sweden,SWE,Europe | North & West,Europe,488377689564.92,52076.26,81.45121951
+Switzerland,CHE,Europe | North & West,Europe,581208562423.37,74276.72,82.24634146
+Tajikistan,TJK,Asia | East & Central,Asia,5642178579.58,739.73,66.9955122
+Tanzania,TZA,Africa | North & East,Africa,30917376837.12,707.93,59.18170732
+Thailand,THA,Asia | East & Central,Asia,318907930075.71,4802.66,73.81378049
+Togo,TGO,Africa | South & West,Africa,3172945506.36,503.16,55.46887805
+Tonga,TON,Oceania,Oceania,369212477.46,3546.78,72.18263415
+Trinidad and Tobago,TTO,America | North & Central,Americas,20758191857.98,15630.05,69.59736585
+Tunisia,TUN,Africa | North & East,Africa,44426016487.36,4212.15,74.60243902
+Turkey,TUR,Asia | South & West,Asia,731168051903.11,10135.75,74.21119512
+Turkmenistan,TKM,Asia | East & Central,Asia,22148070175.44,4392.72,65.01821951
+Uganda,UGA,Africa | North & East,Africa,18803852465.55,553.26,57.29653659
+Ukraine,UKR,Europe | South & East,Europe,136419300367.96,2974,70.26536585
+United Arab Emirates,ARE,Asia | South & West,Asia,286049293398.98,33885.93,76.59860976
+United Kingdom,GBR,Europe | North & West,Europe,2407933767804.59,38363.44,80.40243902
+United States,USA,America | North & Central,Americas,14964400000000,48377.39,78.54146341
+Uruguay,URY,America | South,Americas,38881102099.88,11530.64,76.61621951
+Uzbekistan,UZB,Asia | East & Central,Asia,39332770928.94,1377.08,67.8587561
+Vanuatu,VUT,Oceania,Oceania,700804286.22,2965.75,70.83890244
+"Venezuela, RB",VEN,America | South,Americas,393801556872.31,13559.13,74.17046341
+Vietnam,VNM,Asia | East & Central,Asia,115931749904.86,1333.58,75.31173171
+"Yemen, Rep.",YEM,Asia | South & West,Asia,31743751169.32,1394.53,62.52765854
+Zambia,ZMB,Africa | North & East,Africa,20265396325.59,1533.28,54.52756098
+Zimbabwe,ZWE,Africa | North & East,Africa,9456808200,723.16,53.59312195
