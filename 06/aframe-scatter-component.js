@@ -38,6 +38,8 @@ AFRAME.registerComponent('graph', {
     const yLabelText = data.yLabelText;
     const zLabelText = data.zLabelText;
 
+    const colorVariable = data.colorVariable;
+
     // These will be used to set the range of the axes' scales
     var xRange = [0, width];
     var yRange = [0, height];
@@ -98,19 +100,22 @@ AFRAME.registerComponent('graph', {
 
       // Needed to assign species a color
       var cScale = d3.scaleOrdinal()
-      										 .domain([
-                              "Iris-virginica",
-                              "Iris-versicolor",
-                              "Iris-setosa"
-                            ])
-      										 .range([
-                            '#d62728', // red
-                            '#2ca02c', // green
-                            '#1f77b4' // blue
-                            ]);
+        .range([
+         '#1f77b4', // blue
+         '#2ca02c', // green
+         '#d62728' // red
+         ]);
 
+      // TODO: don't shadow the data variable
+      // find different names for the
+      // 1) component props
+      // 2) csv data
       // Convert CSV data from string to number
       d3.csv(data.csv, function (data) {
+        const colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
+        cScale.domain(colorVariableDomain);
+        console.log('colorVariableDomain', colorVariableDomain);
+
       	data.forEach(function (d) {
       	  d.color = cScale(d.Species)
       	});
@@ -296,4 +301,8 @@ function labelMaker (dataEl, graphBoxWidth) {
   					 .attr('height', '1.3')
   					 .attr('color', '#ECECEC')
   					 .attr('position', backgroundPosition);
+}
+
+function onlyUnique(value, index, self) { 
+  return self.indexOf(value) === index;
 }
