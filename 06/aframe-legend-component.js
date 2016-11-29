@@ -24,10 +24,10 @@ AFRAME.registerComponent('legend', {
 
     let colors;
     if (
-      typeof data.colors !== 'undefined' &&
-      data.colors.length > 0
+      typeof options.colors !== 'undefined' &&
+      options.colors.length > 0
       ) {
-      colors = data.colors;
+      colors = options.colors;
     } else {
       colors = d3.schemeCategory10;
     }
