@@ -168,6 +168,9 @@ AFRAME.registerComponent('graph', {
           .domain(zExtent)
           .range([zRange[0], zRange[1]]);
 
+        // TODO: trigger this mousenter event when a Vive controller
+        // collides with a data point sphere
+        // 
         // Append data to graph and attach event listeners
         originPoint.selectAll('a-sphere')
           .data(data)
@@ -198,12 +201,21 @@ AFRAME.registerComponent('graph', {
           // Look for an existing beam
           const oldBeam = d3.select('#tempDataBeam');
           
-      	// Look for an existing background
-        const oldBackground = d3.select('#tempDataBackground');
+      	  // Look for an existing background
+          const oldBackground = d3.select('#tempDataBackground');
+
+          const labelMakerOptions = {
+            xLabelText,
+            yLabelText,
+            zLabelText,
+            xVariable,
+            yVariable,
+            zVariable
+          }
 
           // If there is no existing label, make one
           if (oldLabel[0][0] === null) {
-            labelMaker(this, graphBoxWidth);
+            labelMaker(this, graphBoxWidth, labelMakerOptions);
           } else {
             // Remove old label
             oldLabel.remove();
@@ -212,7 +224,7 @@ AFRAME.registerComponent('graph', {
             // Remove background
 	          oldBackground.remove();
             // Create new label
-            labelMaker(this, graphBoxWidth);
+            labelMaker(this, graphBoxWidth, labelMakerOptions);
           }
         }
       };
@@ -285,17 +297,21 @@ function gridMaker (width, height, depth) {
  * dataEl - A data point's element.
  * graphBoxWidth - The width of the graph.
  */
-function labelMaker (dataEl, graphBoxWidth) {
+function labelMaker (dataEl, graphBoxWidth, options) {
   const dataElement = d3.select(dataEl);
   // Retrieve original data
   const dataValues = dataEl.__data__;
 
+  const xVariable = options.xVariable;
+  const yVariable = options.yVariable;
+  const zVariable = options.zVariable;
+
   // Create individual x, y, and z labels using original data values
   // round to 1 decimal space (should use d3 format for consistency later)
-  const sepalLength = `Sepal length (cm): ${dataValues.SepalLengthCm}\n \n`;
-  const petalLength = `Petal length (cm): ${dataValues.PetalLengthCm}\n \n`;
-  const sepalWidth = `Sepal width (cm): ${dataValues.SepalWidthCm}`;
-  const labelText = `text: ${sepalLength}${petalLength}${sepalWidth}`;
+  const xPointText = `${xLabelText}: ${dataValues[xVariable]}\n \n`;
+  const yPointText = `${yLabelText}: ${dataValues[yVariable]}\n \n`;
+  const zPointText = `${zLabelText}: ${dataValues[zVariable]}`;
+  const pointText = `text: ${xPointText}${yPointText}${zPointText}`;
 
   // Position label right of graph
   const padding = 0.2;
@@ -318,7 +334,7 @@ function labelMaker (dataEl, graphBoxWidth) {
   // Add label
   dataElement.append('a-entity')
     .attr('id', 'tempDataLabel')
-    .attr('bmfont-text', labelText)
+    .attr('bmfont-text', pointText)
     .attr('position', labelPosition);
   
 	const backgroundPosition = `${labelXPosition + 1.15} 0.02 -0.1`;
