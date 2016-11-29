@@ -18,7 +18,22 @@ AFRAME.registerComponent('graph', {
     depth: {
       type: 'number',
       default: 1
-    }
+    },
+    xLabelText: {
+      type: 'string'
+    },
+    yLabelText: {
+      type: 'string'
+    },
+    zLabelText: {
+      type: 'string'
+    },
+    colorVariable: {
+      type: 'string'
+    },
+    colors: {
+      type: 'array'
+    },
   },
 
   /**
@@ -39,6 +54,8 @@ AFRAME.registerComponent('graph', {
     const zLabelText = data.zLabelText;
 
     const colorVariable = data.colorVariable;
+    const colors = data.colors;
+    console.log('colors', colors);
 
     // These will be used to set the range of the axes' scales
     var xRange = [0, width];
@@ -100,11 +117,7 @@ AFRAME.registerComponent('graph', {
 
       // Needed to assign species a color
       var cScale = d3.scaleOrdinal()
-        .range([
-         '#1f77b4', // blue
-         '#2ca02c', // green
-         '#d62728' // red
-         ]);
+        .range(colors);
 
       // TODO: don't shadow the data variable
       // find different names for the
