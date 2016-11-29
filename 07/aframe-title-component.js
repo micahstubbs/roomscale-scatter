@@ -15,12 +15,13 @@ AFRAME.registerComponent('title', {
    */
   update() {
     // entity attributes
+    const el = this.el;
     const data = this.data;
     const line0Text = data.line0Text;
     const line1Text = data.line1Text;
     const line2Text = data.line2Text;
 
-    const titleEntity = d3.select('a-scene')
+    const titleEntity = d3.select(el)
       .append('a-entity') 
       .attr('class', 'title')
       .attr('position', '0 2 -1.8')
