@@ -57,13 +57,7 @@ AFRAME.registerComponent('legend', {
         .selectAll('.legendItem')
         .data(colorVariableDomain)
         .enter().append('a-entity')
-          .attr('position', (d, i) => {
-            console.log('legend text position function')
-            console.log('colorVariableDomain.length', colorVariableDomain.length);
-            console.log('i', i);
-            console.log('(colorVariableDomain.length - i - 1) * 0.5', (colorVariableDomain.length - i - 1) * 0.5);
-            return `0 ${(colorVariableDomain.length - i - 1) * 0.5} 0`;
-          })
+          .attr('position', (d, i) => `0 ${(colorVariableDomain.length - i - 1) * 0.5} 0`)
           .attr('bmfont-text', d => `text: ${d}; color: ${colorScale(d)}`)
           .append('a-sphere')
             .attr('radius', '0.03')
