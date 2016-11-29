@@ -63,7 +63,13 @@ AFRAME.registerComponent('graph', {
     const zLabelText = data.zLabelText;
 
     const colorVariable = data.colorVariable;
-    const colors = data.colors;
+
+    let colors;
+    if (typeof data.colors !== 'undefined') {
+      colors = data.colors;
+    } else {
+      colors = d3.schemeCategory10;
+    }
     console.log('colors', colors);
 
     const xVariable = data.xVariable;
