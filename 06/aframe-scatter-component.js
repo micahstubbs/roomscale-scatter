@@ -39,15 +39,15 @@ AFRAME.registerComponent('graph', {
   /**
    * Called once when component is attached. Generally for initial setup.
    */
-  update: function () {
+  update() {
     // Entity data
-    var el = this.el;
-    var object3D = el.object3D;
-    var data = this.data;
+    const el = this.el;
+    const object3D = el.object3D;
+    const data = this.data;
 
-    var width = data.width;
-    var height = data.height;
-    var depth = data.depth;
+    const width = data.width;
+    const height = data.height;
+    const depth = data.depth;
     
     const xLabelText = data.xLabelText;
     const yLabelText = data.yLabelText;
@@ -58,24 +58,24 @@ AFRAME.registerComponent('graph', {
     console.log('colors', colors);
 
     // These will be used to set the range of the axes' scales
-    var xRange = [0, width];
-    var yRange = [0, height];
-    var zRange = [0, -depth];
+    const xRange = [0, width];
+    const yRange = [0, height];
+    const zRange = [0, -depth];
 
     /**
      * Create origin point.
      * This gives a solid reference point for scaling data.
      * It is positioned at the vertex of the left grid and bottom grid (towards the front).
      */
-    var originPointPosition = (-width / 2) + ' 0 ' + (depth / 2);
-    var originPointID = 'originPoint' + data.id;
+    const originPointPosition = `${-width / 2} 0 ${depth / 2}`;
+    const originPointID = `originPoint${data.id}`;
 
     d3.select(el).append('a-entity')
                  .attr('id', originPointID)
                  .attr('position', originPointPosition);
 
     // Create graphing area out of three textured planes
-    var grid = gridMaker(width, height, depth);
+    const grid = gridMaker(width, height, depth);
     object3D.add(grid);
 
     // Label axes
@@ -83,27 +83,27 @@ AFRAME.registerComponent('graph', {
     // then measure label text length
     // the use that length to
     // sprogrammatically position labels
-    var xLabelPosition = '0.2' + ' ' + '-0.1' + ' ' + '0.1';
-    var xLabelRotation = '-45' + ' ' + '0' + ' ' + '0';
-    d3.select('#' + originPointID)
+    const xLabelPosition = '0.2' + ' ' + '-0.1' + ' ' + '0.1';
+    const xLabelRotation = '-45' + ' ' + '0' + ' ' + '0';
+    d3.select(`#${originPointID}`)
       .append('a-entity')
       .attr('id', 'x')
       .attr('bmfont-text', `text: ${xLabelText}`)
       .attr('position', xLabelPosition)
       .attr('rotation', xLabelRotation);
 
-    var yLabelPosition = (width + 0.12) + ' ' + '0.2' + ' ' + (-depth + 0.08);
-    var yLabelRotation = '0' + ' ' + '-30' + ' ' + '90';
-    d3.select('#' + originPointID)
+    const yLabelPosition = `${width + 0.12} 0.2 ${-depth + 0.08}`;
+    const yLabelRotation = '0' + ' ' + '-30' + ' ' + '90';
+    d3.select(`#${originPointID}`)
       .append('a-entity')
       .attr('id', 'y')
       .attr('bmfont-text', `text: ${yLabelText}`)
       .attr('position', yLabelPosition)
       .attr('rotation', yLabelRotation);
 
-    var zLabelPosition = (width + 0.03) + ' ' + '0.03' + ' ' + (-depth + 0.27);
-    var zLabelRotation = '-45' + ' ' + '-90' + ' ' + '0';
-    d3.select('#' + originPointID)
+    const zLabelPosition = `${width + 0.03} 0.03 ${-depth + 0.27}`;
+    const zLabelRotation = '-45' + ' ' + '-90' + ' ' + '0';
+    d3.select(`#${originPointID}`)
       .append('a-entity')
       .attr('id', 'z')
       .attr('bmfont-text', `text: ${zLabelText}`)
@@ -113,10 +113,10 @@ AFRAME.registerComponent('graph', {
     if (data.csv) {
       /* Plot data from CSV */
 
-      var originPoint = d3.select('#originPoint' + data.id);
+      const originPoint = d3.select(`#originPoint${data.id}`);
 
       // Needed to assign species a color
-      var cScale = d3.scaleOrdinal()
+      const cScale = d3.scaleOrdinal()
         .range(colors);
 
       // TODO: don't shadow the data variable
@@ -124,32 +124,32 @@ AFRAME.registerComponent('graph', {
       // 1) component props
       // 2) csv data
       // Convert CSV data from string to number
-      d3.csv(data.csv, function (data) {
+      d3.csv(data.csv, data => {
         const colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
         cScale.domain(colorVariableDomain);
         console.log('colorVariableDomain', colorVariableDomain);
 
-      	data.forEach(function (d) {
+      	data.forEach(d => {
       	  d.color = cScale(d[colorVariable])
       	});
         plotData(data);
       });
 
-      var plotData = function (data) {
+      function plotData (data) {
         // Scale x, y, and z values
-        var xExtent = d3.extent(data, function (d) { return d.SepalLengthCm; });
-        var xScale = d3.scaleLinear()
+        const xExtent = d3.extent(data, d => d.SepalLengthCm);
+        const xScale = d3.scaleLinear()
                        .domain(xExtent)
                        .range([xRange[0], xRange[1]])
                        .clamp('true');
 
-        var yExtent = d3.extent(data, function (d) { return d.PetalLengthCm; });
-        var yScale = d3.scaleLinear()
+        const yExtent = d3.extent(data, d => d.PetalLengthCm);
+        const yScale = d3.scaleLinear()
                        .domain(yExtent)
                        .range([yRange[0], yRange[1]]);
 
-        var zExtent = d3.extent(data, function (d) { return d.SepalWidthCm; });
-        var zScale = d3.scaleLinear()
+        const zExtent = d3.extent(data, d => d.SepalWidthCm);
+        const zScale = d3.scaleLinear()
                        .domain(zExtent)
                        .range([zRange[0], zRange[1]]);
 
@@ -159,12 +159,8 @@ AFRAME.registerComponent('graph', {
                    .enter()
                    .append('a-sphere')
                    .attr('radius', 0.03)
-                   .attr('color', function(d) {
-                     return d.color;
-                   })
-                   .attr('position', function (d) {
-                     return xScale(d.SepalLengthCm) + ' ' + yScale(d.PetalLengthCm) + ' ' + zScale(d.SepalWidthCm);
-                   })
+                   .attr('color', d => d.color)
+                   .attr('position', d => `${xScale(d.SepalLengthCm)} ${yScale(d.PetalLengthCm)} ${zScale(d.SepalWidthCm)}`)
                    .on('mouseenter', mouseEnter);
 
         /**
@@ -173,22 +169,22 @@ AFRAME.registerComponent('graph', {
          */
         function mouseEnter () {
         	// Get data
-        	var data = this.__data__;
+        	const data = this.__data__;
 
           // Get width of graphBox (needed to set label position)
-          var graphBoxEl = this.parentElement.parentElement;
-          var graphBoxData = graphBoxEl.components.graph.data;
-          var graphBoxWidth = graphBoxData.width;
+          const graphBoxEl = this.parentElement.parentElement;
+          const graphBoxData = graphBoxEl.components.graph.data;
+          const graphBoxWidth = graphBoxData.width;
 
           // Look for an existing label
-          var oldLabel = d3.select('#tempDataLabel');
-          var oldLabelParent = oldLabel.select(function () { return this.parentNode; });
+          const oldLabel = d3.select('#tempDataLabel');
+          const oldLabelParent = oldLabel.select(function () { return this.parentNode; });
 
           // Look for an existing beam
-          var oldBeam = d3.select('#tempDataBeam');
+          const oldBeam = d3.select('#tempDataBeam');
           
       	// Look for an existing background
-        var oldBackground = d3.select('#tempDataBackground');
+        const oldBackground = d3.select('#tempDataBackground');
 
           // If there is no existing label, make one
           if (oldLabel[0][0] === null) {
@@ -217,19 +213,19 @@ AFRAME.registerComponent('graph', {
  */
 function planeMaker (horizontal, vertical) {
   // Controls texture repeat for U and V
-  var uHorizontal = horizontal * 4;
-  var vVertical = vertical * 4;
+  const uHorizontal = horizontal * 4;
+  const vVertical = vertical * 4;
 
   // Load a texture, set wrap mode to repeat
-  var texture = new THREE.TextureLoader().load('https://cdn.rawgit.com/bryik/aframe-scatter-component/master/assets/grid.png');
+  const texture = new THREE.TextureLoader().load('https://cdn.rawgit.com/bryik/aframe-scatter-component/master/assets/grid.png');
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
   texture.anisotropy = 16;
   texture.repeat.set(uHorizontal, vVertical);
 
   // Create material and geometry
-  var material = new THREE.MeshBasicMaterial({map: texture, side: THREE.DoubleSide});
-  var geometry = new THREE.PlaneGeometry(horizontal, vertical);
+  const material = new THREE.MeshBasicMaterial({map: texture, side: THREE.DoubleSide});
+  const geometry = new THREE.PlaneGeometry(horizontal, vertical);
 
   return new THREE.Mesh(geometry, material);
 }
@@ -242,21 +238,21 @@ function planeMaker (horizontal, vertical) {
  * e.g. buffer geometry, merge geometry, better reuse of material/geometry.
  */
 function gridMaker (width, height, depth) {
-  var grid = new THREE.Object3D();
+  const grid = new THREE.Object3D();
 
   // AKA bottom grid
-  var xGrid = planeMaker(width, depth);
+  const xGrid = planeMaker(width, depth);
   xGrid.rotation.x = 90 * (Math.PI / 180);
   grid.add(xGrid);
 
   // AKA far grid
-  var yPlane = planeMaker(width, height);
+  const yPlane = planeMaker(width, height);
   yPlane.position.y = (0.5) * height;
   yPlane.position.z = (-0.5) * depth;
   grid.add(yPlane);
 
   // AKA side grid
-  var zPlane = planeMaker(depth, height);
+  const zPlane = planeMaker(depth, height);
   zPlane.position.x = (-0.5) * width;
   zPlane.position.y = (0.5) * height;
   zPlane.rotation.y = 90 * (Math.PI / 180);
@@ -271,27 +267,27 @@ function gridMaker (width, height, depth) {
  * graphBoxWidth - The width of the graph.
  */
 function labelMaker (dataEl, graphBoxWidth) {
-  var dataElement = d3.select(dataEl);
+  const dataElement = d3.select(dataEl);
   // Retrieve original data
-  var dataValues = dataEl.__data__;
+  const dataValues = dataEl.__data__;
 
   // Create individual x, y, and z labels using original data values
   // round to 1 decimal space (should use d3 format for consistency later)
-  var sepalLength = 'Sepal length (cm): ' + dataValues.SepalLengthCm + '\n \n';
-  var petalLength = 'Petal length (cm): ' + dataValues.PetalLengthCm + '\n \n';
-  var sepalWidth = 'Sepal width (cm): ' + dataValues.SepalWidthCm;
-  var labelText = 'text: ' + sepalLength + petalLength + sepalWidth;
+  const sepalLength = `Sepal length (cm): ${dataValues.SepalLengthCm}\n \n`;
+  const petalLength = `Petal length (cm): ${dataValues.PetalLengthCm}\n \n`;
+  const sepalWidth = `Sepal width (cm): ${dataValues.SepalWidthCm}`;
+  const labelText = `text: ${sepalLength}${petalLength}${sepalWidth}`;
 
   // Position label right of graph
-  var padding = 0.2;
-  var sphereXPosition = dataEl.getAttribute('position').x;
-  var labelXPosition = (graphBoxWidth + padding) - sphereXPosition;
-  var labelPosition = labelXPosition + ' -0.43 0';
+  const padding = 0.2;
+  const sphereXPosition = dataEl.getAttribute('position').x;
+  const labelXPosition = (graphBoxWidth + padding) - sphereXPosition;
+  const labelPosition = `${labelXPosition} -0.43 0`;
 
   // Add pointer
-  var beamWidth = labelXPosition;
+  const beamWidth = labelXPosition;
   // The beam's pivot is in the center
-  var beamPosition = (labelXPosition - (beamWidth / 2)) + '0 0';
+  const beamPosition = `${labelXPosition - (beamWidth / 2)}0 0`;
   dataElement.append('a-box')
              .attr('id', 'tempDataBeam')
              .attr('height', '0.01')
@@ -306,7 +302,7 @@ function labelMaker (dataEl, graphBoxWidth) {
              .attr('bmfont-text', labelText)
              .attr('position', labelPosition);
   
-	var backgroundPosition = (labelXPosition + 1.15) + ' 0.02 -0.1';
+	const backgroundPosition = `${labelXPosition + 1.15} 0.02 -0.1`;
   // Add background card
   dataElement.append('a-plane')
   					 .attr('id', 'tempDataBackground')
