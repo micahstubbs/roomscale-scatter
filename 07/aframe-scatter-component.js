@@ -28,6 +28,18 @@ AFRAME.registerComponent('graph', {
     zLabelText: {
       type: 'string'
     },
+    xLabelTextScale: {
+      type: 'string',
+      default: '1 1 1'
+    },
+    yLabelTextScale: {
+      type: 'string',
+      default: '1 1 1'
+    },
+    zLabelTextLineScale: {
+      type: 'string',
+      default: '1 1 1'
+    },
     colorVariable: {
       type: 'string'
     },
@@ -73,6 +85,10 @@ AFRAME.registerComponent('graph', {
     const xLabelText = data.xLabelText;
     const yLabelText = data.yLabelText;
     const zLabelText = data.zLabelText;
+
+    const xLabelTextScale = data.xLabelTextScale;
+    const yLabelTextScale = data.yLabelTextScale;
+    const zLabelTextScale = data.zLabelTextScale;
 
     const xScaleType = data.xScaleType;
     const yScaleType = data.yScaleType;
@@ -131,7 +147,8 @@ AFRAME.registerComponent('graph', {
       .attr('id', 'x')
       .attr('bmfont-text', `text: ${xLabelText}`)
       .attr('position', xLabelPosition)
-      .attr('rotation', xLabelRotation);
+      .attr('rotation', xLabelRotation)
+      .attr('scale', xLabelTextScale);
 
     const yLabelPosition = `${width + 0.12} 0.2 ${-depth + 0.08}`;
     const yLabelRotation = `0 -30 90`;
@@ -140,7 +157,8 @@ AFRAME.registerComponent('graph', {
       .attr('id', 'y')
       .attr('bmfont-text', `text: ${yLabelText}`)
       .attr('position', yLabelPosition)
-      .attr('rotation', yLabelRotation);
+      .attr('rotation', yLabelRotation)
+      .attr('scale', yLabelTextScale);
 
     const zLabelPosition = `${width + 0.03} 0.03 ${-depth + 0.27}`;
     const zLabelRotation = `-45 -90 0`;
@@ -149,7 +167,8 @@ AFRAME.registerComponent('graph', {
       .attr('id', 'z')
       .attr('bmfont-text', `text: ${zLabelText}`)
       .attr('position', zLabelPosition)
-      .attr('rotation', zLabelRotation);
+      .attr('rotation', zLabelRotation)
+      .attr('scale', zLabelTextScale);
 
     if (data.csv) {
       /* Plot data from CSV */
