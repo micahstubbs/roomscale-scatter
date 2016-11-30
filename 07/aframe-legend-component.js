@@ -11,7 +11,11 @@ AFRAME.registerComponent('legend', {
     },
     colors: {
       type: 'array'
-    }
+    },
+    legendItemYOffset: {
+      type: 'number',
+      default: 0.5
+    }     
   },
   /**
    * Called once when component is attached. Generally for initial setup.
@@ -21,6 +25,7 @@ AFRAME.registerComponent('legend', {
     const el = this.el;
     const options = this.data;
     const colorVariable = options.colorVariable;
+    const legendItemYOffset = options.legendItemYOffset;
 
     let colors;
     if (
@@ -63,7 +68,7 @@ AFRAME.registerComponent('legend', {
         .selectAll('.legendItem')
         .data(colorVariableDomain)
         .enter().append('a-entity')
-          .attr('position', (d, i) => `0 ${(colorVariableDomain.length - i - 1) * 0.5} 0`)
+          .attr('position', (d, i) => `0 ${(colorVariableDomain.length - i - 1) * legendItemYOffset} 0`)
           .attr('bmfont-text', d => `text: ${d}; color: ${colorScale(d)}`)
           .append('a-sphere')
             .attr('radius', '0.03')
