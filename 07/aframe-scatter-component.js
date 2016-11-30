@@ -42,6 +42,18 @@ AFRAME.registerComponent('graph', {
     },
     zVariable: {
       type: 'string'
+    },
+    xScaleType: {
+      type: 'string',
+      default: 'linear'
+    },
+    yScaleType: {
+      type: 'string',
+      default: 'linear'
+    },
+    zScaleType: {
+      type: 'string',
+      default: 'linear'
     }
   },
 
@@ -61,6 +73,10 @@ AFRAME.registerComponent('graph', {
     const xLabelText = data.xLabelText;
     const yLabelText = data.yLabelText;
     const zLabelText = data.zLabelText;
+
+    const xScaleType = data.xScaleType;
+    const yScaleType = data.yScaleType;
+    const zScaleType = data.zScaleType;
 
     const colorVariable = data.colorVariable;
 
@@ -165,20 +181,55 @@ AFRAME.registerComponent('graph', {
       function plotData (data) {
         // Scale x, y, and z values
         const xExtent = d3.extent(data, d => d[xVariable]);
-        const xScale = d3.scaleLinear()
-          .domain(xExtent)
-          .range([xRange[0], xRange[1]])
-          .clamp('true');
+        let xScale;
+        switch (xScaleType) {
+          case 'linear':
+            xScale = d3.scaleLinear()
+              .domain(xExtent)
+              .range([xRange[0], xRange[1]])
+              .clamp('true');
+            break;
+          case 'log':
+            xScale = d3.scaleLog()
+              .domain([Number('1e-1'), d3.max(data, d => d[xVariable])])
+              .range([xRange[0], xRange[1]])
+              .clamp('true');
+            break;
+        }
 
         const yExtent = d3.extent(data, d => d[yVariable]);
-        const yScale = d3.scaleLinear()
-          .domain(yExtent)
-          .range([yRange[0], yRange[1]]);
+        let yScale;
+        switch (yScaleType) {
+          case 'linear':
+            yScale = d3.scaleLinear()
+              .domain(yExtent)
+              .range([yRange[0], yRange[1]])
+              .clamp('true');
+            break;
+          case 'log':
+            yScale = d3.scaleLog()
+              .domain([Number('1e2'), d3.max(data, d => d[yVariable])])
+              .range([yRange[0], yRange[1]])
+              .clamp('true');
+            break;
+        }
 
         const zExtent = d3.extent(data, d => d[zVariable]);
-        const zScale = d3.scaleLinear()
-          .domain(zExtent)
-          .range([zRange[0], zRange[1]]);
+        let zScale;
+        switch (zScaleType) {
+          case 'linear':
+            zScale = d3.scaleLinear()
+              .domain(zExtent)
+              .range([zRange[0], zRange[1]])
+              .clamp('true');
+            break;
+          case 'log':
+            zScale = d3.scaleLog()
+              .domain([Number('1e2'), d3.max(data, d => d[zVariable])])
+              .range([zRange[0], zRange[1]])
+              .clamp('true');
+            break;
+        }
 
         // TODO: trigger this mousenter event when a Vive controller
         // collides with a data point sphere
