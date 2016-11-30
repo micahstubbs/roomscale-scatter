@@ -8,6 +8,15 @@ AFRAME.registerComponent('title', {
     },
     line2Text: {
       type: 'string'
+    },
+    line0Position: {
+      type: 'string'
+    },
+    line1Position: {
+      type: 'string'
+    },
+    line2Position: {
+      type: 'string'
     }
   },
   /**
@@ -16,10 +25,13 @@ AFRAME.registerComponent('title', {
   update() {
     // entity attributes
     const el = this.el;
-    const data = this.data;
-    const line0Text = data.line0Text;
-    const line1Text = data.line1Text;
-    const line2Text = data.line2Text;
+    const options = this.data;
+    const line0Text = options.line0Text;
+    const line1Text = options.line1Text;
+    const line2Text = options.line2Text;
+    const line0Position = options.line0Position;
+    const line1Position = options.line1Position;
+    const line2Position = options.line2Position;
 
     const titleEntity = d3.select(el)
       .append('a-entity') 
@@ -30,21 +42,21 @@ AFRAME.registerComponent('title', {
     // line0
     titleEntity
       .append('a-entity')
-      .attr('position', '-0.8 0.6 0')
+      .attr('position', line0Position)
       .append('a-entity')
         .attr('bmfont-text', `text: ${line0Text}`);
 
     // line1
     titleEntity
       .append('a-entity')
-      .attr('position', '-0.72 0.4 0')
+      .attr('position', line1Position)
       .append('a-entity')
         .attr('bmfont-text', `text: ${line1Text}`);
 
     // line2
     titleEntity
       .append('a-entity')
-      .attr('position', '-0.45 0.2 0')
+      .attr('position', line2Position)
       .append('a-entity')
         .attr('bmfont-text', `text: ${line2Text}`);
   }
