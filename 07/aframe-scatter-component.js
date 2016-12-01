@@ -66,6 +66,18 @@ AFRAME.registerComponent('graph', {
     zScaleType: {
       type: 'string',
       default: 'linear'
+    },
+    xScaleLogDomainMin: {
+      type: 'string',
+      default: '1e-1'
+    },
+    yScaleLogDomainMin: {
+      type: 'string',
+      default: '1e-1'
+    },
+    zScaleLogDomainMin: {
+      type: 'string',
+      default: '1e-1'
     }
   },
 
@@ -93,6 +105,10 @@ AFRAME.registerComponent('graph', {
     const xScaleType = data.xScaleType;
     const yScaleType = data.yScaleType;
     const zScaleType = data.zScaleType;
+
+    const xScaleLogDomainMin = data.xScaleLogDomainMin;
+    const yScaleLogDomainMin = data.yScaleLogDomainMin;
+    const zScaleLogDomainMin = data.zScaleLogDomainMin;
 
     const colorVariable = data.colorVariable;
 
@@ -198,7 +214,9 @@ AFRAME.registerComponent('graph', {
       });
 
       function plotData (data) {
-        // Scale x, y, and z values
+        //
+        // Scale x values
+        //
         const xExtent = d3.extent(data, d => d[xVariable]);
         let xScale;
         switch (xScaleType) {
@@ -210,12 +228,15 @@ AFRAME.registerComponent('graph', {
             break;
           case 'log':
             xScale = d3.scaleLog()
-              .domain([Number('1e-1'), d3.max(data, d => d[xVariable])])
+              .domain([Number(xScaleLogDomainMin), d3.max(data, d => d[xVariable])])
               .range([xRange[0], xRange[1]])
               .clamp('true');
             break;
         }
 
+        //
+        // Scale y values
+        //
         const yExtent = d3.extent(data, d => d[yVariable]);
         let yScale;
         switch (yScaleType) {
@@ -227,12 +248,15 @@ AFRAME.registerComponent('graph', {
             break;
           case 'log':
             yScale = d3.scaleLog()
-              .domain([Number('1e2'), d3.max(data, d => d[yVariable])])
+              .domain([Number(yScaleLogDomainMin), d3.max(data, d => d[yVariable])])
               .range([yRange[0], yRange[1]])
               .clamp('true');
             break;
         }
 
+        //
+        // Scale z values
+        //
         const zExtent = d3.extent(data, d => d[zVariable]);
         let zScale;
         switch (zScaleType) {
@@ -244,7 +268,7 @@ AFRAME.registerComponent('graph', {
             break;
           case 'log':
             zScale = d3.scaleLog()
-              .domain([Number('1e2'), d3.max(data, d => d[zVariable])])
+              .domain([Number(zScaleLogDomainMin), d3.max(data, d => d[zVariable])])
               .range([zRange[0], zRange[1]])
               .clamp('true');
             break;
