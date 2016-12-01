@@ -81,6 +81,10 @@ AFRAME.registerComponent('graph', {
     zScaleLogDomainMin: {
       type: 'string',
       default: '1e-1'
+    },
+    sphereRadius: {
+      type: 'number',
+      default: 0.03
     }
   },
 
@@ -114,6 +118,7 @@ AFRAME.registerComponent('graph', {
     const zScaleLogDomainMin = options.zScaleLogDomainMin;
 
     const colorVariable = options.colorVariable;
+    const sphereRadius = options.sphereRadius;
 
     let colors;
     if (
@@ -291,7 +296,7 @@ AFRAME.registerComponent('graph', {
           .data(data)
           .enter()
           .append('a-sphere')
-          .attr('radius', 0.03)
+          .attr('radius', sphereRadius)
           .attr('color', d => d.color)
           .attr('position', d => `${xScale(d[xVariable])} ${yScale(d[yVariable])} ${zScale(d[zVariable])}`)
           .on('mouseenter', mouseEnter);
