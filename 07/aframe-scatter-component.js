@@ -88,44 +88,44 @@ AFRAME.registerComponent('graph', {
     // Entity data
     const el = this.el;
     const object3D = el.object3D;
-    const data = this.data;
+    const options = this.data;
 
-    const width = data.width;
-    const height = data.height;
-    const depth = data.depth;
+    const width = options.width;
+    const height = options.height;
+    const depth = options.depth;
     
-    const xLabelText = data.xLabelText;
-    const yLabelText = data.yLabelText;
-    const zLabelText = data.zLabelText;
+    const xLabelText = options.xLabelText;
+    const yLabelText = options.yLabelText;
+    const zLabelText = options.zLabelText;
 
-    const xLabelTextScale = data.xLabelTextScale;
-    const yLabelTextScale = data.yLabelTextScale;
-    const zLabelTextScale = data.zLabelTextScale;
+    const xLabelTextScale = options.xLabelTextScale;
+    const yLabelTextScale = options.yLabelTextScale;
+    const zLabelTextScale = options.zLabelTextScale;
 
-    const xScaleType = data.xScaleType;
-    const yScaleType = data.yScaleType;
-    const zScaleType = data.zScaleType;
+    const xScaleType = options.xScaleType;
+    const yScaleType = options.yScaleType;
+    const zScaleType = options.zScaleType;
 
-    const xScaleLogDomainMin = data.xScaleLogDomainMin;
-    const yScaleLogDomainMin = data.yScaleLogDomainMin;
-    const zScaleLogDomainMin = data.zScaleLogDomainMin;
+    const xScaleLogDomainMin = options.xScaleLogDomainMin;
+    const yScaleLogDomainMin = options.yScaleLogDomainMin;
+    const zScaleLogDomainMin = options.zScaleLogDomainMin;
 
-    const colorVariable = data.colorVariable;
+    const colorVariable = options.colorVariable;
 
     let colors;
     if (
-      typeof data.colors !== 'undefined' &&
-      data.colors.length > 0
+      typeof options.colors !== 'undefined' &&
+      options.colors.length > 0
       ) {
-      colors = data.colors;
+      colors = options.colors;
     } else {
       colors = d3.schemeCategory10;
     }
     console.log('colors', colors);
 
-    const xVariable = data.xVariable;
-    const yVariable = data.yVariable;
-    const zVariable = data.zVariable;
+    const xVariable = options.xVariable;
+    const yVariable = options.yVariable;
+    const zVariable = options.zVariable;
     console.log('xVariable', xVariable);
     console.log('yVariable', yVariable);
     console.log('zVariable', zVariable);
@@ -141,7 +141,7 @@ AFRAME.registerComponent('graph', {
      * It is positioned at the vertex of the left grid and bottom grid (towards the front).
      */
     const originPointPosition = `${-width / 2} 0 ${depth / 2}`;
-    const originPointID = `originPoint${data.id}`;
+    const originPointID = `originPoint${options.id}`;
 
     d3.select(el).append('a-entity')
       .attr('id', originPointID)
@@ -186,9 +186,9 @@ AFRAME.registerComponent('graph', {
       .attr('rotation', zLabelRotation)
       .attr('scale', zLabelTextScale);
 
-    if (data.csv) {
+    if (options.csv) {
       /* Plot data from CSV */
-      const originPoint = d3.select(`#originPoint${data.id}`);
+      const originPoint = d3.select(`#originPoint${options.id}`);
 
       // create color scale for points
       const colorScale = d3.scaleOrdinal()
@@ -199,7 +199,7 @@ AFRAME.registerComponent('graph', {
       // 1) component props
       // 2) csv data
       // Convert CSV data from string to number
-      d3.csv(data.csv, data => {
+      d3.csv(options.csv, data => {
         const colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
         colorScale.domain(colorVariableDomain);
         console.log('colorVariableDomain', colorVariableDomain);
