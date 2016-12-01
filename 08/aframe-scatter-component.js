@@ -43,6 +43,9 @@ AFRAME.registerComponent('graph', {
     colorVariable: {
       type: 'string'
     },
+    colorVariableDomain: {
+      type: 'array'
+    },
     colors: {
       type: 'array'
     },
@@ -194,13 +197,19 @@ AFRAME.registerComponent('graph', {
       const colorScale = d3.scaleOrdinal()
         .range(colors);
 
-      // TODO: don't shadow the data variable
-      // find different names for the
-      // 1) component props
-      // 2) csv data
       // Convert CSV data from string to number
       d3.csv(options.csv, data => {
-        const colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
+        // allow user to specify colorVariableDomain
+        // to control sort order of legend items
+        let colorVariableDomain;
+        if (
+          typeof options.colorVariableDomain !== 'undefined' &&
+          options.colorVariableDomain.length > 0
+        ) {
+          colorVariableDomain = options.colorVariableDomain;
+        } else {
+          colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
+        } 
         colorScale.domain(colorVariableDomain);
         console.log('colorVariableDomain', colorVariableDomain);
 

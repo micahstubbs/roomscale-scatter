@@ -43,6 +43,9 @@ AFRAME.registerComponent('graph', {
     colorVariable: {
       type: 'string'
     },
+    colorVariableDomain: {
+      type: 'array'
+    },
     colors: {
       type: 'array'
     },
@@ -194,22 +197,28 @@ AFRAME.registerComponent('graph', {
       const colorScale = d3.scaleOrdinal()
         .range(colors);
 
-      // TODO: don't shadow the data variable
-      // find different names for the
-      // 1) component props
-      // 2) csv data
       // Convert CSV data from string to number
       d3.csv(options.csv, data => {
-        const colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
+        // allow user to specify colorVariableDomain
+        // to control sort order of legend items
+        let colorVariableDomain;
+        if (
+          typeof options.colorVariableDomain !== 'undefined' &&
+          options.colorVariableDomain.length > 0
+        ) {
+          colorVariableDomain = options.colorVariableDomain;
+        } else {
+          colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
+        } 
         colorScale.domain(colorVariableDomain);
         console.log('colorVariableDomain', colorVariableDomain);
 
-      	data.forEach(d => {
+        data.forEach(d => {
           d[xVariable] = Number(d[xVariable]);
           d[yVariable] = Number(d[yVariable]);
           d[zVariable] = Number(d[zVariable]);
-      	  d.color = colorScale(d[colorVariable]);
-      	});
+          d.color = colorScale(d[colorVariable]);
+        });
         plotData(data);
       });
 
@@ -292,8 +301,8 @@ AFRAME.registerComponent('graph', {
          * "this" refers to sphere element of a given data point.
          */
         function mouseEnter () {
-        	// Get data
-        	const data = this.__data__;
+          // Get data
+          const data = this.__data__;
 
           // Get width of graphBox (needed to set label position)
           const graphBoxEl = this.parentElement.parentElement;
@@ -307,7 +316,7 @@ AFRAME.registerComponent('graph', {
           // Look for an existing beam
           const oldBeam = d3.select('#tempDataBeam');
           
-      	  // Look for an existing background
+          // Look for an existing background
           const oldBackground = d3.select('#tempDataBackground');
 
           const labelMakerOptions = {
@@ -328,7 +337,7 @@ AFRAME.registerComponent('graph', {
             // Remove beam
             oldBeam.remove();
             // Remove background
-	          oldBackground.remove();
+            oldBackground.remove();
             // Create new label
             labelMaker(this, graphBoxWidth, labelMakerOptions);
           }
@@ -443,14 +452,14 @@ function labelMaker (dataEl, graphBoxWidth, options) {
     .attr('bmfont-text', pointText)
     .attr('position', labelPosition);
   
-	const backgroundPosition = `${labelXPosition + 1.15} 0.02 -0.1`;
+  const backgroundPosition = `${labelXPosition + 1.15} 0.02 -0.1`;
   // Add background card
   dataElement.append('a-plane')
-  	.attr('id', 'tempDataBackground')
-  	.attr('width', '2.3')
-  	.attr('height', '1.3')
-  	.attr('color', '#ECECEC')
-  	.attr('position', backgroundPosition);
+    .attr('id', 'tempDataBackground')
+    .attr('width', '2.3')
+    .attr('height', '1.3')
+    .attr('color', '#ECECEC')
+    .attr('position', backgroundPosition);
 }
 
 /**
