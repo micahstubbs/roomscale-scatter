@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="aframe.min.js"></script>
+<script src="aframe-extras.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.3.0/d3.min.js"></script>
+<script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
+<script scr="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.19.0/babel.min.js"></script>
+<script src="aframe-scatter-component.js"></script>
+<script src="aframe-title-component.js"></script>
+<script src="aframe-legend-component.js"></script>
+<body>
+<a-scene antialias='true'>
+
+  <!-- Camera -->
+  <a-entity camera look-controls wasd-controls></a-entity>
+
+  <!-- Title -->
+  <a-entity position="0 0 0"
+            title="
+              line0Text: Health;
+              line1Text: of;
+              line2Text: Nations;
+              line0Position: -0.43 0.6 0;
+              line1Position: -0.25 0.4 0;
+              line2Position: -0.45 0.2 0;
+            ">
+  </a-entity>
+
+  <!-- Legend -->
+  <a-entity position="0 0 0"
+            legend="
+              csv: world-bank.csv;
+              colorVariable: Continent;
+              legendItemYOffset: 0.3;
+            ">
+  </a-entity>
+
+  <!-- Graph -->
+  <a-entity position="0 0 -1"
+            graph="
+              csv: world-bank.csv;
+              width: 2;
+              height: 2;
+              depth: 2;
+              xLabelText: Life expectancy;
+              yLabelText: GDP per capita [US $];
+              zLabelText: GDP;
+              yLabelTextScale: 0.85 0.85 0.85;
+              colorVariable: Continent;
+              xVariable: lifeExpectancy;
+              yVariable: GDP_perCapita;
+              zVariable: GDP;
+              yScaleType: log;
+              zScaleType: log;
+              yScaleLogDomainMin: 1e2;
+              zScaleLogDomainMin: 1e2;
+            ">
+  </a-entity>
+
+  <a-sky color="#ECECEC"></a-sky>
+</a-scene>
+<script>
+  function render () {
+    //
+    // after adding all objects to the scene
+    // add the Vive controllers
+    //
+    // add left controller 
+    d3.select('a-scene')
+      .append('a-entity')
+        .attr('id', 'leftController')
+        .attr('vive-controls', 'hand: left')
+        .attr('static-body', 'shape: sphere; sphereRadius: 0.02;')
+        .attr('sphere-collider', 'objects: .throwable')
+        .attr('grab', '')
+    // add right controller
+    d3.select('a-scene')
+      .append('a-entity')
+        .attr('id', 'rightController')
+        .attr('vive-controls', 'hand: right')
+        .attr('static-body', 'shape: sphere; sphereRadius: 0.02;')
+        .attr('sphere-collider', 'objects: .throwable')
+        .attr('grab', '')
+  };
+  var sceneEl = document.querySelector('a-scene');
+  if (sceneEl.hasLoaded) {
+    render();
+  } else {
+    sceneEl.addEventListener('loaded', render);
+  }
+</script>
+</body>
