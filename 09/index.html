@@ -45,14 +45,16 @@
               depth: 2;
               xLabelText: predicted value;
               yLabelText: deviance;
-              zLabelText: member count;
-              yLabelTextScale: 0.85 0.85 0.85;
+              zLabelText: model description;
+              zLabelTextScale: 0.85 0.85 0.85;
               colorVariable: description;
               colorVariableDomain: GLM, Random Forest, 50 Trees GBM, 1k Trees GBM, 2k Trees GBM;
               xVariable: predict;
               yVariable: deviance;
-              zVariable: counts;
-              sphereRadius: 0.02;
+              zVariable: description;
+              zScaleType: band;
+              zScaleDomain: GLM, Random Forest, 50 Trees GBM, 1k Trees GBM, 2k Trees GBM;
+              sphereRadius: 0.03;
             ">
   </a-entity>
 
