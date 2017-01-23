@@ -106,6 +106,16 @@ AFRAME.registerComponent('graph', {
     const object3D = el.object3D;
     const options = this.data;
 
+    if (options.csv) {
+      /* Plot data from CSV */
+      d3.csv(options.csv, data => {
+        plotData(data, el, object3D, options);
+      });
+    }
+  }
+});
+
+function plotData(data, el, object3D, options) {
     const width = options.width;
     const height = options.height;
     const depth = options.depth;
@@ -202,215 +212,204 @@ AFRAME.registerComponent('graph', {
       .attr('position', zLabelPosition)
       .attr('rotation', zLabelRotation)
       .attr('scale', zLabelTextScale);
+    
+    const originPoint = d3.select(`#originPoint${options.id}`);
 
-    if (options.csv) {
-      /* Plot data from CSV */
-      const originPoint = d3.select(`#originPoint${options.id}`);
+    // create color scale for points
+    const colorScale = d3.scaleOrdinal()
+      .range(colors);
 
-      // create color scale for points
-      const colorScale = d3.scaleOrdinal()
-        .range(colors);
+  // allow user to specify colorVariableDomain
+  // to control sort order of legend items
+  let colorVariableDomain;
+  if (
+    typeof options.colorVariableDomain !== 'undefined' &&
+    options.colorVariableDomain.length > 0
+  ) {
+    colorVariableDomain = options.colorVariableDomain;
+  } else {
+    colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
+  } 
+  colorScale.domain(colorVariableDomain);
+  console.log('colorVariableDomain', colorVariableDomain);
 
-      // Convert CSV data from string to number
-      d3.csv(options.csv, data => {
-        // allow user to specify colorVariableDomain
-        // to control sort order of legend items
-        let colorVariableDomain;
-        if (
-          typeof options.colorVariableDomain !== 'undefined' &&
-          options.colorVariableDomain.length > 0
-        ) {
-          colorVariableDomain = options.colorVariableDomain;
-        } else {
-          colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
-        } 
-        colorScale.domain(colorVariableDomain);
-        console.log('colorVariableDomain', colorVariableDomain);
+  data.forEach(d => {
+    if (xScaleType !== 'band') {
+      d[xVariable] = Number(d[xVariable]);
+    };
+    if (yScaleType !== 'band') {
+      d[yVariable] = Number(d[yVariable]);
+    };
+    if (zScaleType !== 'band') {
+      d[zVariable] = Number(d[zVariable]);
+    };
+    d.color = colorScale(d[colorVariable]);
+  });
+  //
+  // Scale x values
+  //
+  const xExtent = d3.extent(data, d => d[xVariable]);
+  let xScale;
+  switch (xScaleType) {
+    case 'linear':
+      xScale = d3.scaleLinear()
+        .domain(xExtent)
+        .range([xRange[0], xRange[1]])
+        .clamp('true');
+      break;
+    case 'log':
+      xScale = d3.scaleLog()
+        .domain([Number(xScaleLogDomainMin), d3.max(data, d => d[xVariable])])
+        .range([xRange[0], xRange[1]])
+        .clamp('true');
+      break;
+    case 'band':
+      let xScaleDomain;
+      if (
+        typeof options.xScaleDomain !== 'undefined' &&
+        options.xScaleDomain.length > 0
+      ) {
+        xScaleDomain = options.xScaleDomain;
+      } else {
+        xScaleDomain = data.map(d => d[xVariable]).filter(onlyUnique);
+      }
+      console.log('xScaleDomain', xScaleDomain);
+      xScale = d3.scaleBand()
+        .domain(xScaleDomain)
+        .range([xRange[0], xRange[1]]);
+      break;
+  }
 
-      	data.forEach(d => {
-          if (xScaleType !== 'band') {
-            d[xVariable] = Number(d[xVariable]);
-          };
-          if (yScaleType !== 'band') {
-            d[yVariable] = Number(d[yVariable]);
-          };
-          if (zScaleType !== 'band') {
-            d[zVariable] = Number(d[zVariable]);
-          };
-      	  d.color = colorScale(d[colorVariable]);
-      	});
-        plotData(data);
-      });
+  //
+  // Scale y values
+  //
+  const yExtent = d3.extent(data, d => d[yVariable]);
+  let yScale;
+  switch (yScaleType) {
+    case 'linear':
+      yScale = d3.scaleLinear()
+        .domain(yExtent)
+        .range([yRange[0], yRange[1]])
+        .clamp('true');
+      break;
+    case 'log':
+      yScale = d3.scaleLog()
+        .domain([Number(yScaleLogDomainMin), d3.max(data, d => d[yVariable])])
+        .range([yRange[0], yRange[1]])
+        .clamp('true');
+      break;
+    case 'band':
+      let yScaleDomain;
+      if (
+        typeof options.yScaleDomain !== 'undefined' &&
+        options.yScaleDomain.length > 0
+      ) {
+        yScaleDomain = options.yScaleDomain;
+      } else {
+        yScaleDomain = data.map(d => d[yVariable]).filter(onlyUnique);
+      }
+      console.log('yScaleDomain', yScaleDomain);
+      yScale = d3.scaleBand()
+        .domain(yScaleDomain)
+        .range([yRange[0], yRange[1]]);
+      break;
+  }
 
-      function plotData (data) {
-        //
-        // Scale x values
-        //
-        const xExtent = d3.extent(data, d => d[xVariable]);
-        let xScale;
-        switch (xScaleType) {
-          case 'linear':
-            xScale = d3.scaleLinear()
-              .domain(xExtent)
-              .range([xRange[0], xRange[1]])
-              .clamp('true');
-            break;
-          case 'log':
-            xScale = d3.scaleLog()
-              .domain([Number(xScaleLogDomainMin), d3.max(data, d => d[xVariable])])
-              .range([xRange[0], xRange[1]])
-              .clamp('true');
-            break;
-          case 'band':
-            let xScaleDomain;
-            if (
-              typeof options.xScaleDomain !== 'undefined' &&
-              options.xScaleDomain.length > 0
-            ) {
-              xScaleDomain = options.xScaleDomain;
-            } else {
-              xScaleDomain = data.map(d => d[xVariable]).filter(onlyUnique);
-            }
-            console.log('xScaleDomain', xScaleDomain);
-            xScale = d3.scaleBand()
-              .domain(xScaleDomain)
-              .range([xRange[0], xRange[1]]);
-            break;
-        }
+  //
+  // Scale z values
+  //
+  const zExtent = d3.extent(data, d => d[zVariable]);
+  let zScale;
+  switch (zScaleType) {
+    case 'linear':
+      zScale = d3.scaleLinear()
+        .domain(zExtent)
+        .range([zRange[0], zRange[1]])
+        .clamp('true');
+      break;
+    case 'log':
+      zScale = d3.scaleLog()
+        .domain([Number(zScaleLogDomainMin), d3.max(data, d => d[zVariable])])
+        .range([zRange[0], zRange[1]])
+        .clamp('true');
+      break;
+    case 'band':
+      let zScaleDomain;
+      if (
+        typeof options.zScaleDomain !== 'undefined' &&
+        options.zScaleDomain.length > 0
+      ) {
+        zScaleDomain = options.zScaleDomain;
+      } else {
+        zScaleDomain = data.map(d => d[zVariable]).filter(onlyUnique);
+      }
+      console.log('zScaleDomain', zScaleDomain);
+      zScale = d3.scaleBand()
+        .domain(zScaleDomain)
+        .range([zRange[0], zRange[1]]);
+      break;
+  }
 
-        //
-        // Scale y values
-        //
-        const yExtent = d3.extent(data, d => d[yVariable]);
-        let yScale;
-        switch (yScaleType) {
-          case 'linear':
-            yScale = d3.scaleLinear()
-              .domain(yExtent)
-              .range([yRange[0], yRange[1]])
-              .clamp('true');
-            break;
-          case 'log':
-            yScale = d3.scaleLog()
-              .domain([Number(yScaleLogDomainMin), d3.max(data, d => d[yVariable])])
-              .range([yRange[0], yRange[1]])
-              .clamp('true');
-            break;
-          case 'band':
-            let yScaleDomain;
-            if (
-              typeof options.yScaleDomain !== 'undefined' &&
-              options.yScaleDomain.length > 0
-            ) {
-              yScaleDomain = options.yScaleDomain;
-            } else {
-              yScaleDomain = data.map(d => d[yVariable]).filter(onlyUnique);
-            }
-            console.log('yScaleDomain', yScaleDomain);
-            yScale = d3.scaleBand()
-              .domain(yScaleDomain)
-              .range([yRange[0], yRange[1]]);
-            break;
-        }
+  // TODO: trigger this mousenter event when a Vive controller
+  // collides with a data point sphere
+  // 
+  // Append data to graph and attach event listeners
+  originPoint.selectAll('a-sphere')
+    .data(data)
+    .enter()
+    .append('a-sphere')
+    .attr('radius', sphereRadius)
+    .attr('color', d => d.color)
+    .attr('position', d => `${xScale(d[xVariable])} ${yScale(d[yVariable])} ${zScale(d[zVariable])}`)
+    .on('mouseenter', mouseEnter);
 
-        //
-        // Scale z values
-        //
-        const zExtent = d3.extent(data, d => d[zVariable]);
-        let zScale;
-        switch (zScaleType) {
-          case 'linear':
-            zScale = d3.scaleLinear()
-              .domain(zExtent)
-              .range([zRange[0], zRange[1]])
-              .clamp('true');
-            break;
-          case 'log':
-            zScale = d3.scaleLog()
-              .domain([Number(zScaleLogDomainMin), d3.max(data, d => d[zVariable])])
-              .range([zRange[0], zRange[1]])
-              .clamp('true');
-            break;
-          case 'band':
-            let zScaleDomain;
-            if (
-              typeof options.zScaleDomain !== 'undefined' &&
-              options.zScaleDomain.length > 0
-            ) {
-              zScaleDomain = options.zScaleDomain;
-            } else {
-              zScaleDomain = data.map(d => d[zVariable]).filter(onlyUnique);
-            }
-            console.log('zScaleDomain', zScaleDomain);
-            zScale = d3.scaleBand()
-              .domain(zScaleDomain)
-              .range([zRange[0], zRange[1]]);
-            break;
-        }
+  /**
+   * Event listener adds and removes data labels.
+   * "this" refers to sphere element of a given data point.
+   */
+  function mouseEnter () {
+    // Get data
+    const data = this.__data__;
 
-        // TODO: trigger this mousenter event when a Vive controller
-        // collides with a data point sphere
-        // 
-        // Append data to graph and attach event listeners
-        originPoint.selectAll('a-sphere')
-          .data(data)
-          .enter()
-          .append('a-sphere')
-          .attr('radius', sphereRadius)
-          .attr('color', d => d.color)
-          .attr('position', d => `${xScale(d[xVariable])} ${yScale(d[yVariable])} ${zScale(d[zVariable])}`)
-          .on('mouseenter', mouseEnter);
+    // Get width of graphBox (needed to set label position)
+    const graphBoxEl = this.parentElement.parentElement;
+    const graphBoxData = graphBoxEl.components.graph.data;
+    const graphBoxWidth = graphBoxData.width;
 
-        /**
-         * Event listener adds and removes data labels.
-         * "this" refers to sphere element of a given data point.
-         */
-        function mouseEnter () {
-        	// Get data
-        	const data = this.__data__;
+    // Look for an existing label
+    const oldLabel = d3.select('#tempDataLabel');
+    const oldLabelParent = oldLabel.select(function () { return this.parentNode; });
 
-          // Get width of graphBox (needed to set label position)
-          const graphBoxEl = this.parentElement.parentElement;
-          const graphBoxData = graphBoxEl.components.graph.data;
-          const graphBoxWidth = graphBoxData.width;
+    // Look for an existing beam
+    const oldBeam = d3.select('#tempDataBeam');
+    
+    // Look for an existing background
+    const oldBackground = d3.select('#tempDataBackground');
 
-          // Look for an existing label
-          const oldLabel = d3.select('#tempDataLabel');
-          const oldLabelParent = oldLabel.select(function () { return this.parentNode; });
+    const labelMakerOptions = {
+      xLabelText,
+      yLabelText,
+      zLabelText,
+      xVariable,
+      yVariable,
+      zVariable
+    }
 
-          // Look for an existing beam
-          const oldBeam = d3.select('#tempDataBeam');
-          
-      	  // Look for an existing background
-          const oldBackground = d3.select('#tempDataBackground');
-
-          const labelMakerOptions = {
-            xLabelText,
-            yLabelText,
-            zLabelText,
-            xVariable,
-            yVariable,
-            zVariable
-          }
-
-          // If there is no existing label, make one
-          if (oldLabel[0][0] === null) {
-            labelMaker(this, graphBoxWidth, labelMakerOptions);
-          } else {
-            // Remove old label
-            oldLabel.remove();
-            // Remove beam
-            oldBeam.remove();
-            // Remove background
-	          oldBackground.remove();
-            // Create new label
-            labelMaker(this, graphBoxWidth, labelMakerOptions);
-          }
-        }
-      };
+    // If there is no existing label, make one
+    if (oldLabel[0][0] === null) {
+      labelMaker(this, graphBoxWidth, labelMakerOptions);
+    } else {
+      // Remove old label
+      oldLabel.remove();
+      // Remove beam
+      oldBeam.remove();
+      // Remove background
+      oldBackground.remove();
+      // Create new label
+      labelMaker(this, graphBoxWidth, labelMakerOptions);
     }
   }
-});
+}
 
 /* HELPER FUNCTIONS */
 
