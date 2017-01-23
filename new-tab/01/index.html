@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<script src="aframe.min.js"></script>
+<script src="aframe-extras.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.3.0/d3.min.js"></script>
+<script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
+<script scr="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.19.0/babel.min.js"></script>
+<script src="aframe-scatter-component.js"></script>
+<script src="aframe-title-component.js"></script>
+<script src="aframe-legend-component.js"></script>
+<body>
+<a-scene antialias='true'>
+
+  <!-- Camera -->
+  <a-entity camera look-controls wasd-controls="fly: true"></a-entity>
+
+  <!-- Title -->
+  <a-entity position="0 0 0"
+            title="
+              line0Text: Model;
+              line1Text: Deviances;
+              line2Text: Explorer;
+              line0Position: -0.26 0.6 0;
+              line1Position: -0.45 0.4 0;
+              line2Position: -0.40 0.2 0;
+            ">
+  </a-entity>
+
+  <!-- Legend -->
+  <a-entity position="0 0 0"
+            legend="
+              csv: gb-ef-aggregated-combined-deviances-2.csv;
+              colorVariable: description;
+              colorVariableDomain: GLM, Random Forest, 50 Trees GBM, 1k Trees GBM, 2k Trees GBM;
+              legendItemYOffset: 0.3;
+            ">
+  </a-entity>
+  <a-sky color="#ECECEC"></a-sky>
+</a-scene>
+<script>
+  d3.select('a-scene')
+    .append('a-entity')
+    .attr('position', '0 0 -1')
+    .attr('graph', () => {
+      const graphConfig = {
+        csv: 'gb-ef-aggregated-combined-deviances-2.csv',
+        width: 2,
+        height: 2,
+        depth: 2,
+        xLabelText: 'predicted value',
+        yLabelText: 'deviance',
+        zLabelText: 'model description',
+        zLabelTextScale: '0.85 0.85 0.85',
+        colorVariable: 'description',
+        colorVariableDomain: 'GLM, Random Forest, 50 Trees GBM, 1k Trees GBM, 2k Trees GBM',
+        xVariable: 'predict',
+        yVariable: 'deviance',
+        zVariable: 'description',
+        zScaleType: 'band',
+        zScaleDomain: 'GLM, Random Forest, 50 Trees GBM, 1k Trees GBM, 2k Trees GBM',
+        sphereRadius: 0.03,          
+      }
+      const keys = Object.keys(graphConfig);
+      const values = Object.values(graphConfig);
+      let graphConfigString = '';
+      keys.forEach((key, i) => {
+        const value = values[i];
+        graphConfigString = graphConfigString.concat(`${String(key)}: ${String(value)}; `);
+      })
+      console.log('graphConfigString', graphConfigString);
+      return graphConfigString;
+    })
+
+  function render () {
+    //
+    // after adding all objects to the scene
+    // add the Vive controllers
+    //
+    // add left controller 
+    d3.select('a-scene')
+      .append('a-entity')
+        .attr('id', 'leftController')
+        .attr('vive-controls', 'hand: left')
+        .attr('static-body', 'shape: sphere; sphereRadius: 0.02;')
+        .attr('sphere-collider', 'objects: .throwable')
+        .attr('grab', '')
+    // add right controller
+    d3.select('a-scene')
+      .append('a-entity')
+        .attr('id', 'rightController')
+        .attr('vive-controls', 'hand: right')
+        .attr('static-body', 'shape: sphere; sphereRadius: 0.02;')
+        .attr('sphere-collider', 'objects: .throwable')
+        .attr('grab', '')
+  };
+  var sceneEl = document.querySelector('a-scene');
+  if (sceneEl.hasLoaded) {
+    render();
+  } else {
+    sceneEl.addEventListener('loaded', render);
+  }
+</script>
+</body>
