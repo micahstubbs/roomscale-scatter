@@ -1,6 +1,4 @@
-this time showing a categorical variable vs two numeric variables
-
-predictive modeling example dataset showing different variables
+an iteration that gets data from an h2o-3 server and is designed to be opened by another page, and accept configuration data passed from that other page
 
 --
 

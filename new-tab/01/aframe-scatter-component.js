@@ -112,6 +112,10 @@ AFRAME.registerComponent('graph', {
         plotData(data, el, object3D, options);
       });
     }
+
+    if (options.frameID) {
+      getFrameDataFromh2o3(el, object3D, options)
+    }
   }
 });
 
@@ -409,6 +413,15 @@ function plotData(data, el, object3D, options) {
       labelMaker(this, graphBoxWidth, labelMakerOptions);
     }
   }
+
+  const legendItemYOffset = 0.3;
+  drawLegend(
+    data,
+    colors,
+    colorVariable,
+    colorVariableDomain,
+    legendItemYOffset
+  );
 }
 
 /* HELPER FUNCTIONS */
@@ -527,9 +540,153 @@ function labelMaker (dataEl, graphBoxWidth, options) {
   	.attr('position', backgroundPosition);
 }
 
+function drawLegend(data, colors, colorVariable, colorVariableDomain, legendItemYOffset) {
+  const legendParent = d3.select('a-scene')
+    .append('a-entity')
+    .attr('position', '0 0 0');
+
+  if (
+    typeof colors == 'undefined' &&
+    colors.length <= 0
+    ) {
+    colors = d3.schemeCategory10;
+  }
+  console.log('colors', colors);
+
+  const colorScale = d3.scaleOrdinal()
+    .range(colors);
+
+  const legendEntity = legendParent
+    .append('a-entity')
+    .attr('class', 'legend')
+    .attr('position', '1.4 0.5 -1.5')
+    .attr('rotation', '0 -45 0')
+    .attr('scale', '0.8 0.8 0.8');
+
+    // allow user to specify colorVariableDomain
+    // to control sort order of legend items
+    if (
+      typeof colorVariableDomain === 'undefined' &&
+      colorVariableDomain.length <= 0
+    ) {
+      colorVariableDomain = data.map(d => d[colorVariable]).filter(onlyUnique);
+    } 
+    colorScale.domain(colorVariableDomain);
+
+    // draw legend text and a legend icon
+    // for all colorVariableDomain values
+    legendEntity
+      .selectAll('.legendItem')
+      .data(colorVariableDomain)
+      .enter().append('a-entity')
+        .attr('position', (d, i) => `0 ${(colorVariableDomain.length - i - 1) * legendItemYOffset} 0`)
+        .attr('bmfont-text', d => `text: ${d}; color: ${colorScale(d)}`)
+        .append('a-sphere')
+          .attr('radius', '0.03')
+          .attr('position', '-0.1 0.05 0')
+          .attr('color', d => colorScale(d));    
+}
+
 /**
  * onlyUnique() tests if values in an array are unique
  */
 function onlyUnique(value, index, self) { 
   return self.indexOf(value) === index;
+}
+
+function getFrameDataFromh2o3(el, object3D, options) {
+  const server = options.server;
+  const port = options.port;
+  const frameID = options.frameID;
+
+  // get the number of rows in the aggregated residuals frame
+  // ignore fields that are not the row count
+  const getRowsFrameOptions = '?_exclude_fields=frames/__meta,frames/chunk_summary,frames/default_percentiles,frames/columns,frames/distribution_summary,__meta';
+
+  // get the row counts for each aggregated residuals frame frameID
+  const q0 = d3.queue();
+
+  // console.log('options from getResidualsDataFromh2o3', options);
+
+  const getRowsRequestURL = `${server}:${port}/3/Frames/${frameID}/summary${getRowsFrameOptions}`;
+  console.log('getRowsRequestURL', getRowsRequestURL);
+  q0.defer(d3.request, getRowsRequestURL);
+
+  q0.await(getFrameDataRequest)
+
+  // get the aggregated residuals data from h2o-3
+  function getFrameDataRequest(error, response) {
+    if (error) console.error(error);
+    console.log('arguments from getFrameDataRequest', arguments);
+
+    const parsedRowResponse = JSON.parse(response.response);
+    const frame = {
+      rowCount: parsedRowResponse.frames[0].rows,
+      columnCount: parsedRowResponse.frames[0].column_count,
+      frameID: parsedRowResponse.frames[0].frame_id.name
+    }
+    console.log('parsedRowRespone', parsedRowResponse);
+    console.log('frame from getResidualsFrames', frame);
+
+    const q1 = d3.queue();
+
+    const rowCount = frame.rowCount;
+    const columnCount = frame.columnCount;
+    const frameID = frame.frameID;
+    console.log('frame from getFrameDataRequest', frame);
+
+    const frameOptions = `?column_offset=0&column_count=${columnCount}&row_count=${rowCount}`;
+    const getDataRequestURL = `${server}:${port}/3/Frames/${frameID}${frameOptions}`;
+    console.log('getDataRequestURL', getDataRequestURL);
+    q1.defer(d3.request, getDataRequestURL)
+    q1.await(handleResponse);
+    
+    function handleResponse(error, response) {
+      if (error) console.error(error);
+      console.log('handleResponse was called');
+      console.log('arguments from handleResponse', arguments);
+      console.log('response', response);
+      const parsedResponse = parseResponse(response);
+      plotData(parsedResponse, el, object3D, options);
+    }
+  }
+}
+
+
+function parseResponse(response) {
+  const responseData = JSON.parse(response.response);
+  const columnsData = responseData.frames[0].columns;
+  const points = [];
+  columnsData.forEach(d => {
+    // console.log('d.label', d.label);
+    // console.log('d from columnsData', d);
+    if (Object.prototype.toString.call(d.data) === '[object Array]') {
+      // if the current column is an enum or a category
+      // recognize that the value in the data is acually a index for the
+      // domain array
+      // the value at that index position in the domain array
+      // is actually the datum that we want
+      d.data.forEach((e, j) => {
+        if (typeof points[j] === 'undefined') points[j] = {};
+          let value;
+          if (d.type === "enum" && d.domain !== null) {
+            value = d.domain[e];
+          } else {
+            value = e;
+          }
+          points[j][d.label] = value;
+      });
+    }
+  });
+  console.log('columnsData', columnsData);
+  console.log('points', points);
+
+  points.forEach((d, i) => {
+    d.id = i;
+  });
+
+  const parsedData = points;
+
+  // console.log('parsedData', parsedData);
+  return parsedData;
 }
