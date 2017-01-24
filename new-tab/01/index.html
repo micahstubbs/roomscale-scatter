@@ -7,25 +7,10 @@
 <script src="https://rawgit.com/bryik/aframe-bmfont-text-component/master/dist/aframe-bmfont-text-component.min.js"></script>
 <script scr="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.19.0/babel.min.js"></script>
 <script src="aframe-scatter-component.js"></script>
-<script src="aframe-title-component.js"></script>
-<script src="aframe-legend-component.js"></script>
 <body>
 <a-scene antialias='true'>
-
   <!-- Camera -->
   <a-entity camera look-controls wasd-controls="fly: true"></a-entity>
-
-  <!-- Title -->
-  <a-entity position="0 0 0"
-            title="
-              line0Text: h2o-3;
-              line1Text: Frame;
-              line2Text: Explorer;
-              line0Position: -0.26 0.6 0;
-              line1Position: -0.27 0.4 0;
-              line2Position: -0.40 0.2 0;
-            ">
-  </a-entity>
 
   <a-sky color="#ECECEC"></a-sky>
 </a-scene>
@@ -34,9 +19,9 @@
   const searchParams = new URLSearchParams(paramsString);
   // const frameID = searchParams.get('frame_id');
   const frameID = 'small-synth-data';
-  const xVariable = 'C1';
-  const yVariable = 'C4';
-  const zVariable = 'C3';
+  const xVariable = 'C4';
+  const yVariable = 'C5';
+  const zVariable = 'C6';
   const colorVariable = 'C2';
 
   d3.select('a-scene')
@@ -50,9 +35,9 @@
         width: 2,
         height: 2,
         depth: 2,
-        xLabelText: 'C1',
-        yLabelText: 'C4',
-        zLabelText: 'C3',
+        xLabelText: 'C4',
+        yLabelText: 'C5',
+        zLabelText: 'C6',
         zLabelTextScale: '0.85 0.85 0.85',
         colorVariable,
         xVariable,

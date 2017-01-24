@@ -422,7 +422,18 @@ function plotData(data, el, object3D, options) {
     colorVariableDomain,
     legendItemYOffset
   );
-}
+
+  const frameID = options.frameID;
+  const titleOptions = {
+    line0Text: 'h2o-3',
+    line1Text: 'Frame',
+    line2Text: frameID,
+    line0Position: '-0.26 0.6 0',
+    line1Position: '-0.27 0.4 0',
+    line2Position: '-0.80 0.2 0'
+  }
+  drawTitle(titleOptions);          
+} // end plotData()
 
 /* HELPER FUNCTIONS */
 
@@ -585,6 +596,47 @@ function drawLegend(data, colors, colorVariable, colorVariableDomain, legendItem
           .attr('radius', '0.03')
           .attr('position', '-0.1 0.05 0')
           .attr('color', d => colorScale(d));    
+}
+
+function drawTitle(options) {
+  // entity attributes
+  const line0Text = options.line0Text;
+  const line1Text = options.line1Text;
+  const line2Text = options.line2Text;
+  const line0Position = options.line0Position;
+  const line1Position = options.line1Position;
+  const line2Position = options.line2Position;
+
+  const titleParent = d3.select('a-scene')
+    .append('a-entity')
+    .attr('position', '0 0 0');
+
+  const titleEntity = titleParent
+    .append('a-entity') 
+    .attr('class', 'title')
+    .attr('position', '0 2 -1.8')
+    .attr('rotation', '35 0 0');
+
+  // line0
+  titleEntity
+    .append('a-entity')
+    .attr('position', line0Position)
+    .append('a-entity')
+      .attr('bmfont-text', `text: ${line0Text}`);
+
+  // line1
+  titleEntity
+    .append('a-entity')
+    .attr('position', line1Position)
+    .append('a-entity')
+      .attr('bmfont-text', `text: ${line1Text}`);
+
+  // line2
+  titleEntity
+    .append('a-entity')
+    .attr('position', line2Position)
+    .append('a-entity')
+      .attr('bmfont-text', `text: ${line2Text}`);
 }
 
 /**
