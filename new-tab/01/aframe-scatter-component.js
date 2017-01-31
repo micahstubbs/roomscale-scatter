@@ -541,14 +541,14 @@ function labelMaker (dataEl, graphBoxWidth, options) {
     .attr('bmfont-text', pointText)
     .attr('position', labelPosition);
   
-	const backgroundPosition = `${labelXPosition + 1.15} 0.02 -0.1`;
+  const backgroundPosition = `${labelXPosition + 1.15} 0.02 -0.1`;
   // Add background card
   dataElement.append('a-plane')
-  	.attr('id', 'tempDataBackground')
-  	.attr('width', '2.3')
-  	.attr('height', '1.3')
-  	.attr('color', '#ECECEC')
-  	.attr('position', backgroundPosition);
+    .attr('id', 'tempDataBackground')
+    .attr('width', '2.3')
+    .attr('height', '1.3')
+    .attr('color', '#ECECEC')
+    .attr('position', backgroundPosition);
 }
 
 function drawLegend(data, colors, colorVariable, colorVariableDomain, legendItemYOffset) {
